@@ -27,14 +27,25 @@ UPSTREAM = os.path.join(ROOT, "solver", "upstream")
 
 
 def machine_info():
+    """Describe the machine. Linux has sysctl too, but not the macOS keys,
+    so an empty answer there used to print 'on  ( cores)' on the site."""
+    cpu = ""
     try:
         cpu = subprocess.run(["sysctl", "-n", "machdep.cpu.brand_string"],
                              capture_output=True, text=True).stdout.strip()
-        cores = subprocess.run(["sysctl", "-n", "hw.ncpu"],
-                               capture_output=True, text=True).stdout.strip()
-        return f"{cpu} ({cores} cores)"
     except Exception:
-        return platform.processor() or platform.machine()
+        pass
+    if not cpu:
+        try:
+            for line in open("/proc/cpuinfo"):
+                if line.startswith("model name"):
+                    cpu = line.split(":", 1)[1].strip()
+                    break
+        except Exception:
+            pass
+    cpu = cpu or platform.processor() or platform.machine() or "unknown cpu"
+    cores = os.cpu_count() or "?"
+    return f"{cpu} ({cores} cores)"
 
 
 def main():

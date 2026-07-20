@@ -43,6 +43,7 @@ h2 {
 
 /* ---------- coin bar (only when the operator sets the variables) ---------- */
 
+.coinbar[hidden] { display: none; } /* display:flex would defeat the attribute */
 .coinbar {
   display: flex;
   align-items: center;

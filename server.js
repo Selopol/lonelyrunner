@@ -70,11 +70,13 @@ function state() {
     const p = e.payload || {};
     if (e.type === "RUN_STARTED") {
       // A worker that dies without a terminal event leaves a run claiming to
-      // be alive. A later run of the same kind proves the older one is gone.
-      const kind = String(p.run_id || "").replace(/-\d{8}T\d{6}Z$/, "");
+      // be alive. Only one solver run per k exists at a time, so a newer one
+      // proves the older is gone, whatever its prime selection was named.
+      const isHunt = String(p.run_id || "").startsWith("hunt");
       for (const r of Object.values(runs)) {
-        if (r.status === "running" &&
-            String(r.run_id || "").replace(/-\d{8}T\d{6}Z$/, "") === kind) {
+        if (r.status !== "running") continue;
+        const rHunt = String(r.run_id || "").startsWith("hunt");
+        if (rHunt === isHunt && (isHunt || r.k === p.k)) {
           r.status = "superseded";
           r.reason = "a later run of the same kind started";
         }

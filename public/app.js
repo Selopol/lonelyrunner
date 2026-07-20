@@ -200,6 +200,9 @@ function appendLedger(evts) {
     el.appendChild(ln);
     lastSeq = e.seq;
   }
+  // The journal grows forever; the browser should not. Keep a readable tail
+  // and send anyone who wants the rest to the downloadable chain.
+  while (el.children.length > 400) el.removeChild(el.firstChild);
   if (stick) el.scrollTop = el.scrollHeight;
 }
 
