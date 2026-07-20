@@ -79,3 +79,4 @@ Counter Example Mod 223
 now=10:34:18.047905 
 Parameters: p = 227, k = 13 
 [FindCover] Spawning 16 threads for 16 DfsStates 
+[FindCover] Step 1 (l=1): S size = 2667353 
