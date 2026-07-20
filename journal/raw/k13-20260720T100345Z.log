@@ -53,3 +53,29 @@ Counter Example Mod 211
 now=10:28:14.312306 
 Parameters: p = 223, k = 13 
 [FindCover] Spawning 15 threads for 15 DfsStates 
+[FindCover] Step 1 (l=1): S size = 226264 
+ -- Time elapsed: 358.599837 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 194 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 6 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 12 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 3 
+[Lift]  -- Time elapsed: 5.114601 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 6 
+[Lift] [2.1] Projected down 
+[Lift] [2.1] Squeeze  :: Done ::  S.size() = 3 
+[Lift]  -- Time elapsed: 0.017737 s 
+[Lift] Step 2.2 
+[Lift] [2.2] ansatz: K=13, P=223, L=1 
+[Lift] [2.2] seeds:  ( 1 2 3 4 5 6 7 8 9 10 11 12 13  ), ( 1 2 3 4 5 6 7 8 9 10 11 13 24  ), ( 1 2 3 4 5 6 7 8 9 10 11 13 36  ),  
+[Lift] [2.2] Print  :: Done ::  S.size() = 3 
+[Lift]  -- Time elapsed: 0.000006 s 
+Counter Example Mod 223 
+
+now=10:34:18.047905 
+Parameters: p = 227, k = 13 
+[FindCover] Spawning 16 threads for 16 DfsStates 

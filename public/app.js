@@ -96,7 +96,7 @@ function drawTrack(now) {
 
   const flash = Math.max(0, 1 - (now - flashAt) / 2600);
   if (flash > 0 || REDUCED) {
-    ctx.strokeStyle = `oklch(0.55 0.15 30 / ${0.2 + 0.8 * (REDUCED ? 1 : flash)})`;
+    ctx.strokeStyle = `oklch(0.46 0.09 165 / ${0.2 + 0.8 * (REDUCED ? 1 : flash)})`;
     ctx.lineWidth = 4;
     const arcA = Math.PI * 2 * bound;
     ctx.beginPath();
@@ -104,7 +104,7 @@ function drawTrack(now) {
     ctx.stroke();
   }
 
-  ctx.fillStyle = "oklch(0.55 0.15 30)";
+  ctx.fillStyle = "oklch(0.46 0.09 165)";
   ctx.beginPath();
   ctx.arc(cx, cy - r, w * 0.012, 0, Math.PI * 2);
   ctx.fill();
@@ -130,11 +130,11 @@ function drawTrack(now) {
     fig1Marker.setAttribute("cy", (fig1Fit.k * zy + fig1Fit.oy).toFixed(2));
   }
 
-  $("fig2-cap").innerHTML =
-    `Fig. 2. The track itself: (${v.join(", ")}) and the observer (red). ` +
+  $("scope-cap").innerHTML =
+    `(${v.join(",")})` +
     (lonely || REDUCED
-      ? `<span class="wax">Lonely: every runner ≥ 1/${n} away · certified witness t = ${mainSpec.witness_t}</span>`
-      : `min distance ${minD.toFixed(4)} · loneliness needs ≥ ${bound.toFixed(4)}`);
+      ? ` · <span class="wax">lonely · t = ${mainSpec.witness_t}</span>`
+      : ` · min dist ${minD.toFixed(4)} / ${bound.toFixed(4)}`);
 
   requestAnimationFrame(drawTrack);
 }
@@ -200,24 +200,45 @@ function appendLedger(evts) {
   if (stick) el.scrollTop = el.scrollHeight;
 }
 
-/* the margin rail prints the newest entries like a plotter */
-function railPrint(evts) {
-  const rail = $("rail");
-  if (!rail || !getComputedStyle(rail).display || getComputedStyle(rail).display === "none") return;
-  for (const e of evts.slice(-4)) {
+/* the stage stream prints the newest entries, newest first */
+function streamPrint(evts) {
+  const stream = $("stream");
+  for (const e of evts) {
     const ln = document.createElement("div");
-    ln.className = "rl";
-    ln.innerHTML = `№${String(e.seq).padStart(4, "0")} · <span class="${/CERTIF|CANDID|HYPOTH/.test(e.type) ? "wax" : ""}">${e.type}</span><br>${fmtPayload(e)}`;
-    rail.appendChild(ln);
-    if (e.type === "EXACTLY_CERTIFIED") {
-      const note = document.createElement("div");
-      note.className = "rl rl-note";
-      note.textContent = "tight!";
-      rail.appendChild(note);
-    }
+    ln.className = "sl";
+    ln.innerHTML =
+      `<span class="seq">№${String(e.seq).padStart(4, "0")}</span> ` +
+      `<span class="${/CERTIF|CANDID|HYPOTH/.test(e.type) ? "wax" : ""}">${e.type}</span> ` +
+      fmtPayload(e);
+    stream.prepend(ln);
   }
-  while (rail.children.length > 14) rail.removeChild(rail.firstChild);
+  while (stream.children.length > 10) stream.removeChild(stream.lastChild);
 }
+
+/* HAPPENING NOW: real runs with a live clock, honest quiet state */
+let nowState = null;
+function renderNow() {
+  const s = nowState;
+  if (!s) return;
+  const running = s.runs.filter((r) => r.status === "running" && r.started);
+  const lines = [];
+  for (const r of running.slice(-3)) {
+    const mins = Math.max(0, Math.round((Date.now() - Date.parse(r.started)) / 60000));
+    const what = String(r.run_id || "").startsWith("hunt")
+      ? `hunting extremal configs`
+      : `probing the 14-runner wall (k=${r.k})`;
+    lines.push(`<span class="wax">●</span> ${what}\n  ${r.run_id}\n  running <span class="wax">${mins} min</span> on ${r.machine || "the machine"}`);
+  }
+  const hyp = s.hypotheses[s.hypotheses.length - 1];
+  if (hyp) lines.push(`<span class="wax">●</span> Fable, latest hypothesis:\n  ${hyp.title} <span class="dim">[${hyp.tag || "idea"}]</span>`);
+  if (!running.length) {
+    const ago = s.last_event_ts
+      ? Math.round((Date.now() - Date.parse(s.last_event_ts)) / 60000) : null;
+    lines.push(`<span class="dim">the lab is quiet · last activity ${ago === null ? "never" : ago < 1 ? "just now" : ago + " min ago"}</span>`);
+  }
+  $("now-runs").innerHTML = lines.join("\n");
+}
+setInterval(renderNow, 1000);
 
 /* ---------- state render ---------- */
 function renderState(s) {
@@ -237,10 +258,8 @@ function renderState(s) {
     `wall measured: <span class="wax">${wall}</span> · ` +
     `last activity ${ago === null ? "never" : ago < 1 ? "just now" : ago + " min ago"}`;
 
-  const lastEv = s.total_events ? `№${String(s.total_events - 1).padStart(4, "0")}` : "";
-  $("ticker").innerHTML = s.last_event_ts
-    ? `${lastEv} · latest: <span class="wax">${s.latest_type || ""}</span> ${s.latest_summary || ""} · chain head ${s.chain_head ? s.chain_head.slice(0, 16) : ""}…`
-    : "the journal is quiet";
+  nowState = s;
+  renderNow();
 
   const huntRuns = s.runs.filter((r) => String(r.run_id || "").startsWith("hunt"));
   const screened = huntRuns.reduce((a, r) => a + (r.screened || 0), 0);
@@ -287,15 +306,10 @@ async function poll() {
       fetch("/api/state").then((r) => r.json()),
       fetch(`/api/events?since=${lastSeq}&limit=400`).then((r) => r.json()),
     ]);
-    if (ev.length) {
-      const lastE = ev[ev.length - 1];
-      st.latest_type = lastE.type;
-      st.latest_summary = fmtPayload(lastE);
-    }
     renderState(st);
-    if (ev.length) { appendLedger(ev); railPrint(ev); }
+    if (ev.length) { appendLedger(ev); streamPrint(ev); }
   } catch {
-    $("ticker").textContent = "journal unreachable, retrying…";
+    $("now-runs").innerHTML = `<span class="dim">journal unreachable, retrying…</span>`;
   }
 }
 poll();
