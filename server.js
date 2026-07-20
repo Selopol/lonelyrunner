@@ -109,9 +109,12 @@ function state() {
       };
       // A prime the solver could not finish inside its budget is too
       // expensive to keep re-selecting; record it so the picker skips it.
-      if (e.type === "RUN_ABORTED" && /timeout/i.test(String(p.reason || "")) &&
-          Array.isArray(p.primes) && p.k === 13) {
-        for (const q of p.primes) timedOutK13.add(q);
+      // Older aborts carry no primes field, so read the prime from the run
+      // id (k13_p419-...) as well.
+      if (e.type === "RUN_ABORTED" && /timeout/i.test(String(p.reason || ""))) {
+        if (Array.isArray(p.primes)) for (const q of p.primes) timedOutK13.add(q);
+        const m = String(p.run_id || "").match(/^k13_p(\d+)/);
+        if (m) timedOutK13.add(Number(m[1]));
       }
     } else if (e.type === "PRIME_VERIFIED") {
       primesByK[p.k] = (primesByK[p.k] || 0) + 1;

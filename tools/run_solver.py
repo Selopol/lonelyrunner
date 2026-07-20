@@ -180,6 +180,7 @@ def main():
 
     final = {
         "run_id": run_id, "k": k, "wall_s": wall,
+        "primes": primes,   # the server needs this to skip a timed-out prime
         "raw_log": f"journal/raw/{run_id}.log",
         "raw_sha256": sha256_file(raw_path),
     }
