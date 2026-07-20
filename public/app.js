@@ -283,13 +283,20 @@ let nowState = null;
 function renderNow() {
   const s = nowState;
   if (!s) return;
-  const running = s.runs.filter((r) => r.status === "running" && r.started);
+  // A run whose worker died leaves no terminal event. Never claim it is still
+  // going: past this age it is stale, not live.
+  const STALE_MS = 3 * 60 * 60 * 1000;
+  const running = s.runs.filter(
+    (r) => r.status === "running" && r.started && Date.now() - Date.parse(r.started) < STALE_MS
+  );
   const lines = [];
   for (const r of running.slice(-3)) {
     const mins = Math.max(0, Math.round((Date.now() - Date.parse(r.started)) / 60000));
     const what = String(r.run_id || "").startsWith("hunt")
-      ? `hunting extremal configs`
-      : `probing the 14-runner wall (k=${r.k})`;
+      ? `hunting extremal configurations`
+      : r.k >= 13
+      ? `probing the open 14-runner case`
+      : `reproducing the solved ${r.k + 1}-runner case`;
     lines.push(`<span class="wax">●</span> ${what}\n  ${r.run_id}\n  running <span class="wax">${mins} min</span> on ${r.machine || "the machine"}`);
   }
   const hyp = s.hypotheses[s.hypotheses.length - 1];
