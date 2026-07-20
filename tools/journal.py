@@ -50,6 +50,19 @@ def _read_all():
 def append(event_type, payload):
     if event_type not in EVENT_TYPES:
         raise ValueError(f"unknown event type: {event_type}")
+    # Worker mode: if JOURNAL_API is set, the web service owns the chain.
+    api = os.environ.get("JOURNAL_API")
+    if api:
+        import urllib.request
+        req = urllib.request.Request(
+            api.rstrip("/") + "/api/events",
+            data=json.dumps({"type": event_type, "payload": payload,
+                             "commit": _git_commit()}).encode(),
+            headers={"Content-Type": "application/json",
+                     "Authorization": f"Bearer {os.environ.get('JOURNAL_TOKEN', '')}"},
+            method="POST")
+        with urllib.request.urlopen(req, timeout=30) as r:
+            return json.loads(r.read())
     events = _read_all()
     prev = events[-1]["hash"] if events else "genesis"
     core = {

@@ -1,0 +1,17 @@
+# Worker image: C++ solver + python tools + headless Claude Code (Track C).
+# Railway: create a second service from this repo with
+#   Build > Dockerfile Path = Dockerfile.worker
+FROM node:20-bookworm
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    clang python3 python3-numpy git ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN npm install -g @anthropic-ai/claude-code
+
+WORKDIR /app
+COPY . .
+
+# clang++ alias parity with local runs
+ENV CXX=clang++
+CMD ["bash", "worker/loop.sh"]
