@@ -7,6 +7,10 @@ on:
   schedule:
     # every 20 minutes; GitHub queues these loosely, so the real gap varies
     - cron: "*/20 * * * *"
+  # GitHub's scheduler is best-effort and drops ticks under load, so any
+  # commit mirrors too. Neither path needs a credential.
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -32,7 +36,14 @@ jobs:
       - name: Rebuild notebook entries from the journal
         run: python3 tools/memory.py restore
 
+      - name: Skip when this run is the mirror's own commit
+        run: |
+          if git log -1 --pretty=%s | grep -q '^mirror: journal at'; then
+            echo "SKIP=1" >> "$GITHUB_ENV"
+          fi
+
       - name: Commit if the record moved
+        if: env.SKIP != '1'
         run: |
           set -euo pipefail
           git config user.name "Lonely Runner Lab"
