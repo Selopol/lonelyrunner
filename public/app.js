@@ -390,9 +390,15 @@ function renderState(s) {
   $("backbone-live").innerHTML = solverRuns
     .map((r) => {
       const primes = s.primes_verified[r.k] || 0;
-      const st = r.status === "running" ? `<span class="wax">running</span>`
+      // Same staleness rule as the live panel: a run with no ending is not
+      // proof of life, and a superseded one never got a wall clock.
+      const stale = r.started && Date.now() - Date.parse(r.started) > 3 * 60 * 60 * 1000;
+      const st = r.status === "running" && !stale ? `<span class="wax">running</span>`
+        : r.status === "running" ? `<span class="dim">no ending recorded</span>`
+        : r.status === "superseded" ? `<span class="dim">superseded</span>`
         : r.status === "bounded" ? `<span class="dim">bounded probe</span>`
-        : `done in ${r.wall_s}s`;
+        : r.wall_s != null ? `done in ${r.wall_s}s`
+        : `<span class="dim">ended</span>`;
       return `k=${r.k}  primes verified <span class="wax">${primes}</span>  ${st}`;
     }).join("\n") +
     (s.k13_layers.length

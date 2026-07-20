@@ -20,7 +20,7 @@
   - `JOURNAL_TOKEN=<same value as WORKER_TOKEN>`
   - `CLAUDE_CODE_OAUTH_TOKEN=<see below>`
   - optional: `K13_PROBE_SECONDS=3600`, `HUNT_MAX_SPEED=48`,
-    `BRAIN_EVERY_N_CYCLES=6`
+    `BRAIN_ENABLED=0` to park the brain
 - No domain needed. Scale CPU as budget allows: the solver threads scale
   with cores automatically.
 
@@ -33,10 +33,20 @@ claude setup-token
 ```
 
 Follow the browser flow, copy the long-lived token it prints, paste it into
-the worker's `CLAUDE_CODE_OAUTH_TOKEN`. The worker then runs headless
-notebook cycles on the Max subscription (same pattern as ideaman's Build).
-Rate limits are the subscription's; the worker runs one bounded cycle every
-`BRAIN_EVERY_N_CYCLES` worker cycles and stays under them.
+the worker's `CLAUDE_CODE_OAUTH_TOKEN`.
+
+Alternative that needs no terminal: base64 the credentials file of a
+logged-in Claude Code and set it as `CLAUDE_CREDS_B64`. On macOS that file
+lives in the Keychain, not on disk:
+
+```bash
+security find-generic-password -s "Claude Code-credentials" -w | base64
+```
+
+The worker writes it to `~/.claude/.credentials.json` at boot and refreshes
+its own access token from there. Either way the brain then runs back to back;
+the loop backs off for five minutes whenever a cycle dies in under a minute,
+which is what a rate limit looks like. Set `BRAIN_ENABLED=0` to park it.
 
 ## 4. Day-2 notes
 

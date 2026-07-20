@@ -103,6 +103,7 @@ def main():
     t0 = time.time()
     current_p = None
     aborted = False
+    failure = None
     proc = subprocess.Popen([binary], stdout=subprocess.PIPE,
                             stderr=subprocess.STDOUT, text=True)
 
@@ -144,6 +145,13 @@ def main():
         except KeyboardInterrupt:
             proc.kill()
             aborted = True
+        except Exception as exc:
+            # A journal POST timing out used to escape here, leaving the C++
+            # solver orphaned with its threads and the run marked alive
+            # forever, so the next cycle picked the same prime again.
+            proc.kill()
+            aborted = True
+            failure = f"{type(exc).__name__}: {exc}"[:200]
     proc.wait()
     wall = round(time.time() - t0, 1)
 
@@ -153,8 +161,11 @@ def main():
         "raw_sha256": sha256_file(raw_path),
     }
     if aborted:
-        final["reason"] = f"time limit {timeout}s (bounded profiling job)"
-        append("RUN_ABORTED", final)
+        final["reason"] = failure or f"time limit {timeout}s (bounded profiling job)"
+        try:
+            append("RUN_ABORTED", final)
+        except Exception as exc:
+            print(f"could not journal the abort: {exc}")
         print(f"ABORTED after {wall}s (bounded), raw log {raw_path}")
     else:
         append("RUN_DONE", final)

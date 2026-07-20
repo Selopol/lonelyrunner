@@ -28,7 +28,12 @@ EVENT_TYPES = {
 
 
 def _canonical(obj):
-    return json.dumps(obj, sort_keys=True, separators=(",", ":"))
+    # ensure_ascii must stay False: JSON.stringify in server.js does not
+    # escape non-ASCII, and both sides have to hash the same bytes. A single
+    # delta or a curly quote in a thought would otherwise read as a broken
+    # chain and stop the hourly mirror for good.
+    return json.dumps(obj, sort_keys=True, separators=(",", ":"),
+                      ensure_ascii=False)
 
 
 def _git_commit():
