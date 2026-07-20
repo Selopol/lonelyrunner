@@ -15,6 +15,7 @@ import platform
 import re
 import signal
 import subprocess
+import threading
 import sys
 import time
 from datetime import datetime, timezone
@@ -119,6 +120,23 @@ def main():
 
     for sig in (signal.SIGTERM, signal.SIGINT):
         signal.signal(sig, on_term)
+
+    # The per-line timeout below only fires while the solver is talking. On a
+    # large prime it can go silent for hours inside one phase, so the loop
+    # blocks on read and the deadline never arrives, wedging the whole compute
+    # loop. This watchdog kills it on wall-clock regardless of output.
+    watchdog_fired = {"hit": False}
+    if timeout:
+        def watchdog():
+            proc.wait()  # returns early if the solver finishes on its own
+
+        timer = threading.Timer(timeout + 30, lambda: (
+            watchdog_fired.__setitem__("hit", True), proc.kill()))
+        timer.daemon = True
+        timer.start()
+    else:
+        timer = None
+
     with open(raw_path, "w") as raw:
         try:
             for line in proc.stdout:
@@ -152,6 +170,11 @@ def main():
             proc.kill()
             aborted = True
             failure = f"{type(exc).__name__}: {exc}"[:200]
+    if timer:
+        timer.cancel()
+    if watchdog_fired["hit"]:
+        aborted = True
+        failure = f"wall-clock timeout {timeout}s (solver went silent)"
     proc.wait()
     wall = round(time.time() - t0, 1)
 
