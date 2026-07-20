@@ -1,0 +1,46 @@
+name: mirror the journal
+
+# The live journal lives on the worker's volume. This pulls it back into the
+# repository every hour so the record survives the service, and so anyone can
+# read the whole chain from git without trusting the site.
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch the live journal
+        run: |
+          set -euo pipefail
+          curl -fsS --max-time 120 https://lonelyrunner.fun/journal/events.jsonl \
+            -o /tmp/events.jsonl
+          test -s /tmp/events.jsonl
+          mv /tmp/events.jsonl journal/events.jsonl
+
+      - name: Verify the hash chain before committing
+        run: python3 tools/journal.py verify
+
+      - name: Rebuild notebook entries from the journal
+        run: python3 tools/memory.py restore
+
+      - name: Commit if the record moved
+        run: |
+          set -euo pipefail
+          git config user.name "Lonely Runner Lab"
+          git config user.email "lab@lonelyrunner.fun"
+          git add journal/events.jsonl notebook
+          if git diff --cached --quiet; then
+            echo "journal unchanged"
+            exit 0
+          fi
+          n=$(wc -l < journal/events.jsonl | tr -d ' ')
+          git commit -m "mirror: journal at $n events"
+          git push
