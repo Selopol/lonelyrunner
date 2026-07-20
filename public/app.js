@@ -216,6 +216,30 @@ function streamPrint(evts) {
   while (stream.children.length > 10) stream.removeChild(stream.lastChild);
 }
 
+/* ---------- coin bar: shown only if the operator configured it ---------- */
+fetch("/api/config").then((r) => r.json()).then((c) => {
+  if (!c.ticker && !c.ca) return;
+  const bar = $("coinbar");
+  bar.hidden = false;
+  $("coin-ticker").textContent = c.ticker || "";
+  const ca = $("coin-ca");
+  if (c.ca) {
+    ca.textContent = c.ca;
+    ca.addEventListener("click", () => {
+      navigator.clipboard.writeText(c.ca);
+      const was = ca.textContent;
+      ca.textContent = "copied";
+      setTimeout(() => (ca.textContent = was), 1200);
+    });
+  } else {
+    ca.hidden = true;
+  }
+  const links = [];
+  if (c.url) links.push(`<a href="${c.url}" rel="noopener">buy</a>`);
+  if (c.x_url) links.push(`<a href="${c.x_url}" rel="noopener">X</a>`);
+  $("coin-links").innerHTML = links.join("");
+}).catch(() => {});
+
 /* ---------- the thinking line ---------- */
 /* Real reasoning written by the model while working on this problem. Each
    line is a journal event; nothing here is generated in the browser. */

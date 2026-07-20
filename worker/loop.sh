@@ -13,6 +13,10 @@
 set -u
 cd "$(dirname "$0")/.."
 
+# This container's disk is wiped on every redeploy; the journal is not.
+# Rebuild the lab notebook from it before any thinking starts.
+python3 tools/memory.py restore || true
+
 brain_loop() {
   local n=0 start dur
   while true; do

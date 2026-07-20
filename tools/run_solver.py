@@ -51,9 +51,11 @@ def main():
     open(main_path, "w").write(patched)
 
     binary = os.path.join(build_dir, f"lrc_k{k}")
+    # Some images need LLVM's own libc++ for <format>; see Dockerfile.worker.
+    extra = os.environ.get("SOLVER_CXXFLAGS", "").split()
     t0 = time.time()
     cc = subprocess.run(
-        ["clang++", "-std=c++23", "-march=native", "-O3",
+        ["clang++", "-std=c++23", "-march=native", "-O3", *extra,
          "-I", UPSTREAM, main_path, "-o", binary],
         capture_output=True, text=True)
     compile_s = round(time.time() - t0, 1)

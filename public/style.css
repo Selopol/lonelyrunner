@@ -41,6 +41,35 @@ h2 {
 }
 .secno { color: var(--wax); font-size: 0.62em; vertical-align: 0.25em; margin-right: 0.4rem; }
 
+/* ---------- coin bar (only when the operator sets the variables) ---------- */
+
+.coinbar {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+  padding: 0.55rem clamp(1.2rem, 4vw, 3rem);
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+.coin-ticker { color: var(--paper); font-weight: 700; letter-spacing: 0.14em; }
+.coin-ca {
+  font: inherit;
+  color: color-mix(in oklch, var(--paper) 72%, transparent);
+  background: none;
+  border: 1px solid color-mix(in oklch, var(--paper) 28%, transparent);
+  padding: 0.15rem 0.5rem;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+.coin-ca:hover { color: var(--paper); border-color: color-mix(in oklch, var(--paper) 60%, transparent); }
+.coin-links { margin-left: auto; display: flex; gap: 1.1rem; }
+.coin-links a { color: var(--paper); border-bottom: none; text-decoration: underline; text-decoration-color: color-mix(in oklch, var(--paper) 45%, transparent); }
+.coin-links a:hover { color: var(--paper); text-decoration-color: var(--paper); }
+
 /* ---------- masthead ---------- */
 
 .masthead {

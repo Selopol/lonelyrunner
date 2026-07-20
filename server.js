@@ -194,6 +194,16 @@ http
       }, 50 * 1024 * 1024);
     }
 
+    // Coin slot: rendered only when the operator sets these on the service.
+    if (p === "/api/config") {
+      return send(res, 200, JSON.stringify({
+        ticker: process.env.COIN_TICKER || "",
+        ca: process.env.COIN_CA || "",
+        url: process.env.COIN_URL || "",
+        x_url: process.env.X_URL || "",
+      }));
+    }
+
     if (p === "/api/state") {
       return send(res, 200, JSON.stringify(state()));
     }

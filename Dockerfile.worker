@@ -3,13 +3,17 @@
 #   Build > Dockerfile Path = Dockerfile.worker
 FROM node:20-bookworm
 
-# bookworm ships clang-14 (no -std=c++23); the solver needs a modern clang
+# bookworm ships clang-14 (no -std=c++23) and a libstdc++ without <format>,
+# so the solver needs both a modern clang and LLVM's own standard library
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 python3-numpy git ca-certificates curl gnupg lsb-release wget software-properties-common \
     && wget -qO /tmp/llvm.sh https://apt.llvm.org/llvm.sh \
     && bash /tmp/llvm.sh 18 \
+    && apt-get install -y --no-install-recommends libc++-18-dev libc++abi-18-dev \
     && ln -s /usr/bin/clang++-18 /usr/local/bin/clang++ \
     && rm -rf /var/lib/apt/lists/*
+
+ENV SOLVER_CXXFLAGS="-stdlib=libc++"
 
 RUN npm install -g @anthropic-ai/claude-code
 

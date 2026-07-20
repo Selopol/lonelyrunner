@@ -24,9 +24,11 @@ there. If you find yourself about to redo a measurement that is already in the
 journal, pick the next unanswered question instead.
 
 Do this cycle:
-1. Read docs/EXPERIMENT.md, the latest file in notebook/, and the last few
-   HYPOTHESIS_PROPOSED plus recent THOUGHT events in the journal, so you know
-   what has been tried, what failed, and what the open question is now.
+1. Run `python3 tools/memory.py brief` first, every time. It prints what the
+   experiment already knows: the measured wall, every hypothesis filed, the
+   dead ends, and the most recent reasoning. Treat the dead ends as closed:
+   do not repropose them without new evidence. Then read docs/EXPERIMENT.md
+   and the latest file in notebook/ for detail.
 2. Read journal/events.jsonl highlights via: python3 -c "..." or the API
    (JOURNAL_API env). Note any new SIEVE_LAYER_DONE sizes for k=13.
 3. Advance the current hypothesis by ONE concrete step from the previous
