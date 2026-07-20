@@ -1,0 +1,12 @@
+{
+  "name": "lonelyrunner",
+  "version": "1.0.0",
+  "description": "The Lonely Runner Experiment: a live, verifiable attack on the open frontier of the Lonely Runner Conjecture",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

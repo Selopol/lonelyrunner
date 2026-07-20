@@ -1,0 +1,913 @@
+now=10:02:07.104005 
+Parameters: p = 47, k = 8 
+[FindCover] Spawning 5 threads for 5 DfsStates 
+[FindCover] Step 1 (l=1): S size = 1279 
+ -- Time elapsed: 0.002092 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 3708 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 106 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 12 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 3 
+[Lift]  -- Time elapsed: 0.005894 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 16 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 16 
+[Lift]  -- Time elapsed: 0.000117 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000289 s 
+Subproof Mod 47 Done 
+
+now=10:02:07.112866 
+Parameters: p = 53, k = 8 
+[FindCover] Spawning 5 threads for 5 DfsStates 
+[FindCover] Step 1 (l=1): S size = 191 
+ -- Time elapsed: 0.000501 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 169 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 14 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 12 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 3 
+[Lift]  -- Time elapsed: 0.001438 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 8 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 8 
+[Lift]  -- Time elapsed: 0.000078 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000180 s 
+Subproof Mod 53 Done 
+
+now=10:02:07.115081 
+Parameters: p = 59, k = 8 
+[FindCover] Spawning 6 threads for 6 DfsStates 
+[FindCover] Step 1 (l=1): S size = 2015 
+ -- Time elapsed: 0.002417 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 2740 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 42 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 12 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 3 
+[Lift]  -- Time elapsed: 0.006430 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 14 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 14 
+[Lift]  -- Time elapsed: 0.000108 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000634 s 
+Subproof Mod 59 Done 
+
+now=10:02:07.124719 
+Parameters: p = 61, k = 8 
+[FindCover] Spawning 6 threads for 6 DfsStates 
+[FindCover] Step 1 (l=1): S size = 1023 
+ -- Time elapsed: 0.002208 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 901 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 16 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.003799 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 12 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 12 
+[Lift]  -- Time elapsed: 0.000060 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000280 s 
+Subproof Mod 61 Done 
+
+now=10:02:07.131094 
+Parameters: p = 67, k = 8 
+[FindCover] Spawning 7 threads for 7 DfsStates 
+[FindCover] Step 1 (l=1): S size = 1216 
+ -- Time elapsed: 0.002037 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 217 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 6 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.001510 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 8 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 8 
+[Lift]  -- Time elapsed: 0.000076 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000190 s 
+Subproof Mod 67 Done 
+
+now=10:02:07.134940 
+Parameters: p = 71, k = 8 
+[FindCover] Spawning 7 threads for 7 DfsStates 
+[FindCover] Step 1 (l=1): S size = 375 
+ -- Time elapsed: 0.001066 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 64 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000684 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 6 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 6 
+[Lift]  -- Time elapsed: 0.000061 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000168 s 
+Subproof Mod 71 Done 
+
+now=10:02:07.136935 
+Parameters: p = 73, k = 8 
+[FindCover] Spawning 8 threads for 8 DfsStates 
+[FindCover] Step 1 (l=1): S size = 4205 
+ -- Time elapsed: 0.006547 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 1271 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 10 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.004685 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 6 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 6 
+[Lift]  -- Time elapsed: 0.000065 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000166 s 
+Subproof Mod 73 Done 
+
+now=10:02:07.148451 
+Parameters: p = 79, k = 8 
+[FindCover] Spawning 8 threads for 8 DfsStates 
+[FindCover] Step 1 (l=1): S size = 442 
+ -- Time elapsed: 0.001391 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 87 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 6 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000653 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 6 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 6 
+[Lift]  -- Time elapsed: 0.000067 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000190 s 
+Subproof Mod 79 Done 
+
+now=10:02:07.150773 
+Parameters: p = 83, k = 8 
+[FindCover] Spawning 9 threads for 9 DfsStates 
+[FindCover] Step 1 (l=1): S size = 2244 
+ -- Time elapsed: 0.004512 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 223 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.002033 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 6 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 6 
+[Lift]  -- Time elapsed: 0.000074 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000182 s 
+Subproof Mod 83 Done 
+
+now=10:02:07.157625 
+Parameters: p = 89, k = 8 
+[FindCover] Spawning 9 threads for 9 DfsStates 
+[FindCover] Step 1 (l=1): S size = 259 
+ -- Time elapsed: 0.001658 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 35 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 6 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000652 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 4 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 4 
+[Lift]  -- Time elapsed: 0.000065 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000186 s 
+Subproof Mod 89 Done 
+
+now=10:02:07.160202 
+Parameters: p = 97, k = 8 
+[FindCover] Spawning 10 threads for 10 DfsStates 
+[FindCover] Step 1 (l=1): S size = 499 
+ -- Time elapsed: 0.003146 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 30 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000660 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000078 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000102 s 
+Subproof Mod 97 Done 
+
+now=10:02:07.164207 
+Parameters: p = 101, k = 8 
+[FindCover] Spawning 11 threads for 11 DfsStates 
+[FindCover] Step 1 (l=1): S size = 1274 
+ -- Time elapsed: 0.006577 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 60 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 6 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.001680 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 4 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 4 
+[Lift]  -- Time elapsed: 0.000074 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000196 s 
+Subproof Mod 101 Done 
+
+now=10:02:07.172769 
+Parameters: p = 103, k = 8 
+[FindCover] Spawning 11 threads for 11 DfsStates 
+[FindCover] Step 1 (l=1): S size = 792 
+ -- Time elapsed: 0.005873 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 27 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000876 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 4 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 4 
+[Lift]  -- Time elapsed: 0.000065 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000181 s 
+Subproof Mod 103 Done 
+
+now=10:02:07.179785 
+Parameters: p = 107, k = 8 
+[FindCover] Spawning 11 threads for 11 DfsStates 
+[FindCover] Step 1 (l=1): S size = 159 
+ -- Time elapsed: 0.002457 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 5 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000411 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000078 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000223 s 
+Subproof Mod 107 Done 
+
+now=10:02:07.182972 
+Parameters: p = 109, k = 8 
+[FindCover] Spawning 12 threads for 12 DfsStates 
+[FindCover] Step 1 (l=1): S size = 2670 
+ -- Time elapsed: 0.011160 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 45 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.002202 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000068 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000109 s 
+Subproof Mod 109 Done 
+
+now=10:02:07.196551 
+Parameters: p = 113, k = 8 
+[FindCover] Spawning 12 threads for 12 DfsStates 
+[FindCover] Step 1 (l=1): S size = 855 
+ -- Time elapsed: 0.007087 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 17 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 6 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.001168 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000075 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000126 s 
+Subproof Mod 113 Done 
+
+now=10:02:07.205029 
+Parameters: p = 127, k = 8 
+[FindCover] Spawning 14 threads for 14 DfsStates 
+[FindCover] Step 1 (l=1): S size = 1143 
+ -- Time elapsed: 0.015732 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 29 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.001609 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000081 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000121 s 
+Subproof Mod 127 Done 
+
+now=10:02:07.222600 
+Parameters: p = 131, k = 8 
+[FindCover] Spawning 14 threads for 14 DfsStates 
+[FindCover] Step 1 (l=1): S size = 250 
+ -- Time elapsed: 0.017991 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 6 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000523 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000080 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000132 s 
+Subproof Mod 131 Done 
+
+now=10:02:07.241344 
+Parameters: p = 137, k = 8 
+[FindCover] Spawning 15 threads for 15 DfsStates 
+[FindCover] Step 1 (l=1): S size = 454 
+ -- Time elapsed: 0.026872 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 8 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000746 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000081 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000138 s 
+Subproof Mod 137 Done 
+
+now=10:02:07.269210 
+Parameters: p = 139, k = 8 
+[FindCover] Spawning 15 threads for 15 DfsStates 
+[FindCover] Step 1 (l=1): S size = 189 
+ -- Time elapsed: 0.020456 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 1 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000307 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 4 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 4 
+[Lift]  -- Time elapsed: 0.000086 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000177 s 
+Subproof Mod 139 Done 
+
+now=10:02:07.290253 
+Parameters: p = 149, k = 8 
+[FindCover] Spawning 16 threads for 16 DfsStates 
+[FindCover] Step 1 (l=1): S size = 134 
+ -- Time elapsed: 0.026024 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000379 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000084 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000131 s 
+Subproof Mod 149 Done 
+
+now=10:02:07.316901 
+Parameters: p = 151, k = 8 
+[FindCover] Spawning 16 threads for 16 DfsStates 
+[FindCover] Step 1 (l=1): S size = 67 
+ -- Time elapsed: 0.025666 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000855 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000103 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000161 s 
+Subproof Mod 151 Done 
+
+now=10:02:07.343704 
+Parameters: p = 157, k = 8 
+[FindCover] Spawning 17 threads for 17 DfsStates 
+[FindCover] Step 1 (l=1): S size = 72 
+ -- Time elapsed: 0.044363 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000317 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000079 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000161 s 
+Subproof Mod 157 Done 
+
+now=10:02:07.388642 
+Parameters: p = 163, k = 8 
+[FindCover] Spawning 18 threads for 18 DfsStates 
+[FindCover] Step 1 (l=1): S size = 294 
+ -- Time elapsed: 0.076064 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 3 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000692 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000107 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000219 s 
+Subproof Mod 163 Done 
+
+now=10:02:07.465746 
+Parameters: p = 167, k = 8 
+[FindCover] Spawning 18 threads for 18 DfsStates 
+[FindCover] Step 1 (l=1): S size = 46 
+ -- Time elapsed: 0.047543 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 1 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000306 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000082 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000171 s 
+Subproof Mod 167 Done 
+
+now=10:02:07.513880 
+Parameters: p = 173, k = 8 
+[FindCover] Spawning 19 threads for 19 DfsStates 
+[FindCover] Step 1 (l=1): S size = 73 
+ -- Time elapsed: 0.071467 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 1 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000359 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000181 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000255 s 
+Subproof Mod 173 Done 
+
+now=10:02:07.586161 
+Parameters: p = 179, k = 8 
+[FindCover] Spawning 19 threads for 19 DfsStates 
+[FindCover] Step 1 (l=1): S size = 7 
+ -- Time elapsed: 0.060418 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 1 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000186 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000107 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000155 s 
+Subproof Mod 179 Done 
+
+now=10:02:07.647044 
+Parameters: p = 181, k = 8 
+[FindCover] Spawning 20 threads for 20 DfsStates 
+[FindCover] Step 1 (l=1): S size = 93 
+ -- Time elapsed: 0.090100 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 5 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000331 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000097 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000172 s 
+Subproof Mod 181 Done 
+
+now=10:02:07.737762 
+Parameters: p = 191, k = 8 
+[FindCover] Spawning 20 threads for 21 DfsStates 
+[FindCover] Step 1 (l=1): S size = 48 
+ -- Time elapsed: 0.090992 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000208 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000083 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000171 s 
+Subproof Mod 191 Done 
+
+now=10:02:07.829244 
+Parameters: p = 193, k = 8 
+[FindCover] Spawning 20 threads for 21 DfsStates 
+[FindCover] Step 1 (l=1): S size = 17 
+ -- Time elapsed: 0.084251 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 1 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000178 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000094 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000166 s 
+Subproof Mod 193 Done 
+
+now=10:02:07.913949 
+Parameters: p = 197, k = 8 
+[FindCover] Spawning 20 threads for 21 DfsStates 
+[FindCover] Step 1 (l=1): S size = 15 
+ -- Time elapsed: 0.080303 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 1 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000187 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000094 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000190 s 
+Subproof Mod 197 Done 
+
+now=10:02:07.994739 
+Parameters: p = 199, k = 8 
+[FindCover] Spawning 20 threads for 22 DfsStates 
+[FindCover] Step 1 (l=1): S size = 72 
+ -- Time elapsed: 0.146382 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 5 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000716 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000126 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000272 s 
+Subproof Mod 199 Done 
+
+now=10:02:08.142257 
+Parameters: p = 211, k = 8 
+[FindCover] Spawning 20 threads for 23 DfsStates 
+[FindCover] Step 1 (l=1): S size = 22 
+ -- Time elapsed: 0.145088 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 1 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000233 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000093 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000178 s 
+Subproof Mod 211 Done 
+
+now=10:02:08.287871 
+Parameters: p = 223, k = 8 
+[FindCover] Spawning 20 threads for 24 DfsStates 
+[FindCover] Step 1 (l=1): S size = 4 
+ -- Time elapsed: 0.150240 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 1 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000096 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000092 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000192 s 
+Subproof Mod 223 Done 
+
+now=10:02:08.438508 
+Parameters: p = 227, k = 8 
+[FindCover] Spawning 20 threads for 25 DfsStates 
+[FindCover] Step 1 (l=1): S size = 13 
+ -- Time elapsed: 0.219405 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 1 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000151 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000102 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000231 s 
+Subproof Mod 227 Done 
+
+now=10:02:08.658418 
+Parameters: p = 229, k = 8 
+[FindCover] Spawning 20 threads for 25 DfsStates 
+[FindCover] Step 1 (l=1): S size = 7 
+ -- Time elapsed: 0.232896 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 3 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000424 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000095 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000240 s 
+Subproof Mod 229 Done 
+
+now=10:02:08.892095 
+Parameters: p = 233, k = 8 
+[FindCover] Spawning 20 threads for 25 DfsStates 
+[FindCover] Step 1 (l=1): S size = 1 
+ -- Time elapsed: 0.191558 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 1 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000059 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000094 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000389 s 
+Subproof Mod 233 Done 
+
+now=10:02:09.084213 
+Parameters: p = 239, k = 8 
+[FindCover] Spawning 20 threads for 26 DfsStates 
+[FindCover] Step 1 (l=1): S size = 5 
+ -- Time elapsed: 0.316260 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 3 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 4 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000197 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000139 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000225 s 
+Subproof Mod 239 Done 
+
+now=10:02:09.401051 
+Parameters: p = 241, k = 8 
+[FindCover] Spawning 20 threads for 26 DfsStates 
+[FindCover] Step 1 (l=1): S size = 3 
+ -- Time elapsed: 0.288243 s 
+[Lift] Step 2.0 
+[Lift] [2.0] Forcing Lift c=2: T size = 1 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Forcing Lift c=2: T size = 2 
+[Lift] [2.0] Projected down 
+[Lift] [2.0] Squeeze  :: Done ::  S.size() = 1 
+[Lift]  -- Time elapsed: 0.000099 s 
+[Lift] Step 2.1 
+[Lift] [2.1] Forcing Lift c=3: T size = 2 
+[Lift] [2.1] Force 3  :: Done ::  S.size() = 2 
+[Lift]  -- Time elapsed: 0.000101 s 
+[Lift] Step 2.2 
+[Lift] [2.2] Forcing Lift c=3: T size = 0 
+[Lift] [2.2] Force 3  :: Done ::  S.size() = 0 
+[Lift]  -- Time elapsed: 0.000209 s 
+Subproof Mod 241 Done 
+
+All work done -- Time elapsed: 2.585740 s 

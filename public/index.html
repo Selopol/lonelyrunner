@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Lonely Runner Experiment</title>
+<meta name="description" content="A live, verifiable attack on the open frontier of the Lonely Runner Conjecture: 14 runners, unsolved since 1967. Every step is a hash-chained artifact.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%232b3a35'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%23ece9e2' stroke-width='1.5'/%3E%3Ccircle cx='26' cy='16' r='2.4' fill='%23e0a83f'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=Fragment+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <span class="wordmark">THE LONELY RUNNER EXPERIMENT</span>
+  <nav>
+    <a href="https://github.com/Selopol/lonelyrunner">source</a>
+    <a href="/journal/events.jsonl">journal</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <p class="kicker reveal">A LIVE MATHEMATICS EXPERIMENT</p>
+    <h1 class="reveal">Can AI make the 14th&nbsp;runner lonely?</h1>
+    <p class="lede reveal">Between 2025 and 2026, computers proved that each of
+    13 runners on a circular track eventually runs alone. The case of 14 has
+    never been settled. A frontier model and one ten-core machine are attacking
+    it here, in public. Every step below is a hash-chained artifact.</p>
+    <p class="statusline mono" id="statusline">connecting to the journal…</p>
+  </div>
+  <div class="hero-stage">
+    <canvas id="circle" aria-label="14 runners on a circular track, replaying a certified extremal configuration"></canvas>
+    <p class="stage-caption mono" id="stage-caption"></p>
+  </div>
+</section>
+
+<section class="problem fade">
+  <h2>The problem</h2>
+  <div class="problem-grid">
+    <p class="formula" aria-label="for some time t, the distance from v i t to the nearest integer is at least one fourteenth, for every i">
+      ∃t&thinsp;: &nbsp;‖v<sub>i</sub>&thinsp;t‖ ≥ <span class="frac">1&frasl;14</span> &nbsp;for all <em>i</em>
+    </p>
+    <p class="problem-copy">You stand still on a circular track of length one.
+    Thirteen runners pass you forever, each at a different constant speed.
+    The conjecture, posed by Jörg Wills in 1967, says a moment must come when
+    every runner is at least 1/14 of the track away from you: a moment when
+    you are lonely. Nobody has proven that this moment exists. For speeds
+    (1,&thinsp;2,&thinsp;…,&thinsp;13) it barely does; the margin is exactly
+    1/14, and not a hair more. That fragility is the whole difficulty.</p>
+  </div>
+</section>
+
+<section class="frontier fade">
+  <h2>The frontier</h2>
+  <ol class="ledger timeline">
+    <li><span class="yr">1967</span><span class="what">Conjecture posed</span><span class="who">Wills</span></li>
+    <li><span class="yr">1972</span><span class="what">4 runners</span><span class="who">Betke, Wills</span></li>
+    <li><span class="yr">1984</span><span class="what">5 runners</span><span class="who">Cusick, Pomerance</span></li>
+    <li><span class="yr">2001</span><span class="what">6 runners</span><span class="who">Bohman, Holzman, Kleitman</span></li>
+    <li><span class="yr">2008</span><span class="what">7 runners</span><span class="who">Barajas, Serra</span></li>
+    <li><span class="yr">2025</span><span class="what">8, 9, 10 runners</span><span class="who">Rosenfeld; Trakulthongchai</span></li>
+    <li><span class="yr">2026</span><span class="what">11, 12, 13 runners</span><span class="who">Sungkawichai, Trakulthongchai</span></li>
+    <li class="open"><span class="yr">now</span><span class="what">14 runners: open</span><span class="who">this experiment</span></li>
+  </ol>
+  <p class="frontier-note">The last six cases fell to one computational method:
+  reduce the conjecture to a finite check over prime moduli, then make the
+  check tractable. The record holders publish their code. Ours is a
+  <a href="https://github.com/Selopol/lonelyrunner/tree/main/solver">pinned fork</a> of it.</p>
+</section>
+
+<section class="experiment fade">
+  <h2>The experiment</h2>
+  <p class="experiment-intro">Three tracks run at once. Nothing on this page is
+  simulated: if a number is quiet, the lab is quiet.</p>
+
+  <div class="track" id="track-hunt">
+    <h3><span class="tno">I</span> The Hunt</h3>
+    <p>Adversarial search for extremal speed configurations at the frontier.
+    Candidates survive a numeric screen, then a certificate in exact rational
+    arithmetic. A certified δ below 1/14 would disprove the conjecture
+    outright. A certified δ equal to 1/14 is a tight configuration, the rarest
+    object in this landscape.</p>
+    <div class="mono live-block" id="hunt-live">…</div>
+  </div>
+
+  <div class="track" id="track-brain">
+    <h3><span class="tno">II</span> The Brain</h3>
+    <p>The record holders name their bottleneck for 14 runners: the initial
+    sieve I(k,p,1) explodes. A frontier model attacks that bottleneck in
+    public: hypothesis, attempted lemma, counter-test against the solved
+    cases, measured speedup or honest failure. The notebook is in the
+    <a href="https://github.com/Selopol/lonelyrunner/tree/main/notebook">repository</a>.</p>
+    <div class="mono live-block" id="brain-live">…</div>
+  </div>
+
+  <div class="track" id="track-backbone">
+    <h3><span class="tno">III</span> The Backbone</h3>
+    <p>The record method, running on our hardware. Solved cases reproduce in
+    seconds to hours and anchor every claim we make; bounded probes into the
+    14-runner case measure the wall we are trying to breach. On one machine
+    the full case would take years. We publish wall clocks, not promises.</p>
+    <div class="mono live-block" id="backbone-live">…</div>
+  </div>
+</section>
+
+<section class="console-well fade">
+  <div class="console-head mono">
+    <span>PROOF CONSOLE · journal/events.jsonl</span>
+    <span id="chain-head"></span>
+  </div>
+  <div class="console mono" id="console" aria-live="polite"></div>
+  <p class="console-foot mono">verify: <code>python3 tools/journal.py verify</code> · every event carries the hash of the previous one · <a href="/journal/events.jsonl">download the chain</a></p>
+</section>
+
+<section class="verify fade">
+  <h2>Do not trust us</h2>
+  <ul class="ledger checks">
+    <li>The solver is a fork of the code that set the 13-runner record, pinned at upstream <code class="mono">755b116</code>. Diff it.</li>
+    <li>Every δ we publish is certified in exact rational arithmetic. The verifier and its regression against six known tight values from the literature are <a href="https://github.com/Selopol/lonelyrunner/blob/main/tools/delta_verifier.py">80 lines of Python</a>. Run them.</li>
+    <li>The journal is append-only and hash-chained from a genesis block. Raw solver logs are linked from every run. Recompute the chain.</li>
+    <li>We do not claim we will solve it. We claim that every number on this page is real.</li>
+  </ul>
+</section>
+
+<footer>
+  <ol class="ledger papers mono">
+    <li>Wills, Monatsh. Math. 71 (1967)</li>
+    <li>Tao, Contrib. Discrete Math. 13 (2018)</li>
+    <li>Malikiosis, Santos, Schymura, Forum Math. Sigma 13 (2025)</li>
+    <li>Rosenfeld, arXiv:2509.14111 (2025)</li>
+    <li>Sungkawichai, Trakulthongchai, arXiv:2604.23906 (2026)</li>
+  </ol>
+  <p class="colophon">An experiment by one human, one machine and Claude Fable 5.
+  Upstream solver by Sungkawichai and Trakulthongchai, used with attribution.
+  The runners never stop.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
