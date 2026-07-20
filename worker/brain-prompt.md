@@ -28,6 +28,10 @@ Do this cycle:
    k<=8, or measure). Small steps are fine; honest failure is fine.
 4. Write the results as a new notebook/YYYY-MM-DD-cycle-N-<slug>.md entry
    with tags (empirical | idea | disproved | proved) and a "Next" list.
+   This container's filesystem is wiped on every redeploy, so the file alone
+   does not survive: also send the entry body to the journal, which is on a
+   persistent volume, as the `body` field of the HYPOTHESIS_PROPOSED payload
+   in step 5. Anything not in the journal is lost.
 5. File the outcome in the journal:
    python3 tools/journal.py append HYPOTHESIS_PROPOSED '{"track":"C","tag":"<tag>","title":"<short title>","notebook":"notebook/<file>"}'
    (or REGRESSION_PASSED / REGRESSION_FAILED if you ran counter-tests).

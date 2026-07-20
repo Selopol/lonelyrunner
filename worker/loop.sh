@@ -18,23 +18,25 @@ while true; do
   cycle=$((cycle + 1))
   echo "=== worker cycle $cycle $(date -u +%FT%TZ) ==="
 
-  # Track A: bounded probe into the 14-runner case.
-  python3 tools/run_solver.py 13 --timeout "${K13_PROBE_SECONDS:-3600}" || true
+  # Track C first: the brain thinks while the machine grinds, so the page has
+  # fresh reasoning early rather than an hour into the cycle.
+  N="${BRAIN_EVERY_N_CYCLES:-6}"
+  if [ "$N" -gt 0 ] && [ $(((cycle - 1) % N)) -eq 0 ]; then
+    if command -v claude >/dev/null 2>&1 && [ -n "${CLAUDE_CODE_OAUTH_TOKEN:-}" ]; then
+      claude -p "$(cat worker/brain-prompt.md)" \
+        --allowedTools "Read,Write,Edit,Glob,Grep,Bash(python3:*),Bash(cat:*),Bash(ls:*),Bash(head:*),Bash(tail:*),Bash(grep:*)" \
+        --max-turns 40 < /dev/null || true
+    else
+      echo "brain cycle skipped: claude CLI or CLAUDE_CODE_OAUTH_TOKEN missing"
+    fi
+  fi
 
   # Track B: a hunt pass with a fresh name.
   python3 tools/hunt.py --max-speed "${HUNT_MAX_SPEED:-48}" \
     --pass-name "auto-c${cycle}" || true
 
-  # Track C: notebook cycle on the Claude Max subscription.
-  if [ "${BRAIN_EVERY_N_CYCLES:-6}" -gt 0 ] && [ $((cycle % ${BRAIN_EVERY_N_CYCLES:-6})) -eq 0 ]; then
-    if command -v claude >/dev/null 2>&1 && [ -n "${CLAUDE_CODE_OAUTH_TOKEN:-}" ]; then
-      claude -p "$(cat worker/brain-prompt.md)" \
-        --allowedTools "Bash(python3 tools/*),Read,Write,Edit" \
-        --max-turns 40 || true
-    else
-      echo "brain cycle skipped: claude CLI or CLAUDE_CODE_OAUTH_TOKEN missing"
-    fi
-  fi
+  # Track A: bounded probe into the 14-runner case.
+  python3 tools/run_solver.py 13 --timeout "${K13_PROBE_SECONDS:-3600}" || true
 
   sleep 60
 done
