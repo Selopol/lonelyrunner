@@ -291,11 +291,17 @@ function setThoughts(list) {
   const fresh = list.length !== thoughts.length;
   thoughts = list;
   if (!thoughts.length) {
-    $("think-text").textContent = "the brain is between cycles";
+    $("think-text").textContent = "no reasoning recorded yet";
     $("think-text").classList.add("done");
     $("think-meta").textContent = "";
+    document.querySelector(".think-label").textContent = "THE BRAIN IS IDLE";
     return;
   }
+  // Do not claim live thinking when the newest thought has gone cold.
+  const STALE_MIN = 20;
+  const coldMin = (Date.now() - Date.parse(thoughts[thoughts.length - 1].ts)) / 60000;
+  document.querySelector(".think-label").textContent =
+    coldMin > STALE_MIN ? "THE BRAIN IS IDLE" : "FABLE IS THINKING";
   if (fresh) {
     thoughtIdx = thoughts.length - 1;
     typeThought(thoughts[thoughtIdx]);
@@ -325,6 +331,10 @@ function renderNow() {
   }
   const hyp = s.hypotheses[s.hypotheses.length - 1];
   if (hyp) lines.push(`<span class="wax">●</span> Fable, latest hypothesis:\n  ${hyp.title} <span class="dim">[${hyp.tag || "idea"}]</span>`);
+  const th = (s.thoughts || [])[(s.thoughts || []).length - 1];
+  if (th && (Date.now() - Date.parse(th.ts)) / 60000 > 20) {
+    lines.push(`<span class="dim">○ the brain is not reasoning right now\n  last thought ${agoText(th.ts)}</span>`);
+  }
   if (!running.length) {
     const ago = s.last_event_ts
       ? Math.round((Date.now() - Date.parse(s.last_event_ts)) / 60000) : null;
