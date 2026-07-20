@@ -24,7 +24,7 @@ from math import gcd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from delta_verifier import delta, classify
 from journal import append
-from memory import load_events
+from memory import load_events, load_facts
 
 K = 13
 BOUND = Fraction(1, K + 1)
@@ -112,12 +112,16 @@ def main():
     # A configuration certified in an earlier pass is not a new find. Keep
     # verifying it, but do not announce it again.
     already = set()
-    try:
-        for e in load_events():
-            if e["type"] == "EXACTLY_CERTIFIED":
-                already.add(tuple(e["payload"].get("speeds", [])))
-    except Exception:
-        pass
+    facts = load_facts()
+    if facts is not None:
+        already = {tuple(v) for v in facts.get("certified_speeds", [])}
+    else:
+        try:
+            for e in load_events():
+                if e["type"] == "EXACTLY_CERTIFIED":
+                    already.add(tuple(e["payload"].get("speeds", [])))
+        except Exception:
+            pass
 
     screened = kept = 0
     results = []

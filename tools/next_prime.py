@@ -12,7 +12,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from memory import load_events
+from memory import load_events, load_facts
 
 # The upstream prime list for K=13 (solver/upstream/main.cpp, LrcVerifier<13>).
 CANDIDATES = [
@@ -25,11 +25,15 @@ K = 13
 
 
 def main():
-    measured = set()
-    for e in load_events():
-        p = e.get("payload", {})
-        if e["type"] in ("SIEVE_LAYER_DONE", "PRIME_VERIFIED") and p.get("k") == K:
-            measured.add(p.get("p"))
+    facts = load_facts()
+    if facts is not None:
+        measured = set(facts.get("measured_primes_k13", []))
+    else:
+        measured = set()
+        for e in load_events():
+            p = e.get("payload", {})
+            if e["type"] in ("SIEVE_LAYER_DONE", "PRIME_VERIFIED") and p.get("k") == K:
+                measured.add(p.get("p"))
     fresh = [p for p in CANDIDATES if p not in measured]
     if not fresh:
         print(CANDIDATES[0])

@@ -42,8 +42,9 @@ const MIME = {
   ".png": "image/png",
 };
 
-// Journal is append-only; cache parsed events by file size.
-let cache = { size: -1, events: [] };
+// The journal only ever grows, so parse the appended bytes and keep the rest.
+// Re-reading the whole file per request made ingestion quadratic over its life.
+let cache = { size: 0, events: [] };
 function events() {
   let stat;
   try {
@@ -51,15 +52,31 @@ function events() {
   } catch {
     return [];
   }
-  if (stat.size !== cache.size) {
-    const lines = fs.readFileSync(JOURNAL, "utf8").split("\n").filter(Boolean);
-    cache = { size: stat.size, events: lines.map((l) => JSON.parse(l)) };
+  if (stat.size === cache.size) return cache.events;
+  if (stat.size < cache.size) cache = { size: 0, events: [] }; // truncated: reread
+
+  const fd = fs.openSync(JOURNAL, "r");
+  const len = stat.size - cache.size;
+  const buf = Buffer.allocUnsafe(len);
+  fs.readSync(fd, buf, 0, len, cache.size);
+  fs.closeSync(fd);
+
+  const text = buf.toString("utf8");
+  const cut = text.lastIndexOf("\n");           // ignore a half-written line
+  if (cut < 0) return cache.events;
+  for (const line of text.slice(0, cut).split("\n")) {
+    if (line.trim()) cache.events.push(JSON.parse(line));
   }
+  cache.size += Buffer.byteLength(text.slice(0, cut + 1));
+  derived = null;                                // state must be recomputed
   return cache.events;
 }
 
+let derived = null;
+
 function state() {
   const ev = events();
+  if (derived && derived.n === ev.length) return derived.value;
   const runs = {};
   const certifiedBySpeeds = new Map();
   const hypotheses = [];
@@ -114,7 +131,7 @@ function state() {
     }
   }
   const last = ev[ev.length - 1];
-  return {
+  const out = {
     total_events: ev.length,
     chain_head: last ? last.hash : null,
     last_event_ts: last ? last.ts : null,
@@ -125,6 +142,8 @@ function state() {
     hypotheses,
     thoughts: thoughts.slice(-40),
   };
+  derived = { n: ev.length, value: out };
+  return out;
 }
 
 function send(res, code, body, type) {
@@ -171,8 +190,13 @@ function appendEvent(type, payload, commit) {
   };
   const hash = crypto.createHash("sha256").update(prev + canonical(core)).digest("hex");
   const event = { ...core, prev, hash };
-  fs.appendFileSync(JOURNAL, canonical(event) + "\n");
-  cache.size = -1; // invalidate
+  const line = canonical(event) + "\n";
+  fs.appendFileSync(JOURNAL, line);
+  // Extend the cache by exactly what was written; a negative size here would
+  // send the incremental reader reading from before the start of the file.
+  cache.events.push(event);
+  cache.size += Buffer.byteLength(line);
+  derived = null;
   return event;
 }
 
@@ -225,6 +249,14 @@ http
         ca: process.env.COIN_CA || "",
         url: process.env.COIN_URL || "",
         x_url: process.env.X_URL || "",
+      }));
+    }
+
+    if (p === "/api/facts") {
+      const st = state();
+      return send(res, 200, JSON.stringify({
+        certified_speeds: st.certified.map((c) => c.speeds),
+        measured_primes_k13: [...new Set(st.k13_layers.map((l) => l.p))],
       }));
     }
 

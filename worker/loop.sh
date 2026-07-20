@@ -41,7 +41,7 @@ brain_loop() {
     start=$(date +%s)
     claude -p "$(cat worker/brain-prompt.md)" \
       --allowedTools "Read,Write,Edit,Glob,Grep,Bash(python3:*),Bash(cat:*),Bash(ls:*),Bash(head:*),Bash(tail:*),Bash(grep:*)" \
-      --max-turns 40 < /dev/null || true
+      --max-turns "${BRAIN_MAX_TURNS:-160}" < /dev/null || true
     dur=$(( $(date +%s) - start ))
     echo "[brain] cycle $n ended after ${dur}s"
     # A cycle that dies in under a minute means an error or a rate limit.

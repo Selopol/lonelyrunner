@@ -22,6 +22,18 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 NOTEBOOK = os.path.join(ROOT, "notebook")
 
 
+def load_facts():
+    """What the compute loop needs, without pulling the whole chain."""
+    api = os.environ.get("JOURNAL_API")
+    if not api:
+        return None
+    try:
+        with urllib.request.urlopen(api.rstrip("/") + "/api/facts", timeout=30) as r:
+            return json.loads(r.read())
+    except Exception:
+        return None
+
+
 def load_events():
     api = os.environ.get("JOURNAL_API")
     if api:
