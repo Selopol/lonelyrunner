@@ -56,6 +56,10 @@ def restore(events):
 
 def brief(events):
     hyps, disproved, walls, thoughts, regressions = [], [], {}, [], []
+    knowledge, knowledge_seq = None, None
+    for e in events:
+        if e.get("payload", {}).get("knowledge"):
+            knowledge, knowledge_seq = e["payload"]["knowledge"], e["seq"]
     for e in events:
         p = e.get("payload", {})
         t = e["type"]
@@ -71,6 +75,10 @@ def brief(events):
             thoughts.append((e["seq"], p.get("text", "")))
 
     out = ["# What this experiment already knows", ""]
+    if knowledge:
+        out.append(f"## Standing state of knowledge (last written at #{knowledge_seq})")
+        out.append(knowledge.strip())
+        out.append("")
     out.append("## Measured wall, k=13 first sieve layer I(13,p,1)")
     out += [f"- p={p}: {s:,} tuples" for p, s in sorted(walls.items())] or ["- nothing measured yet"]
     out.append("")

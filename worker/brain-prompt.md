@@ -41,6 +41,13 @@ Do this cycle:
    persistent volume, as the `body` field of the HYPOTHESIS_PROPOSED payload
    in step 5. Anything not in the journal is lost.
 5. File the outcome in the journal:
-   python3 tools/journal.py append HYPOTHESIS_PROPOSED '{"track":"C","tag":"<tag>","title":"<short title>","notebook":"notebook/<file>"}'
+   python3 tools/journal.py append HYPOTHESIS_PROPOSED '{"track":"C","tag":"<tag>","title":"<short title>","notebook":"notebook/<file>","body":"<the full notebook entry>","knowledge":"<the standing state of knowledge, rewritten>"}'
    (or REGRESSION_PASSED / REGRESSION_FAILED if you ran counter-tests).
+
+   The `knowledge` field is the memory that makes months of cycles add up.
+   Rewrite it in full every cycle, at most 40 lines, covering: what is
+   established and with what evidence, what is ruled out and why, the current
+   best line of attack, and the single next step. It is what cycle 500 will
+   read instead of five hundred journal entries. Prune it: a fact that no
+   longer earns its line should be dropped, a dead end never should be.
 Keep total wall time under 30 minutes; prefer k<=8 for any measurements.
