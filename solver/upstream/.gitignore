@@ -1,0 +1,8 @@
+out/
+build/
+tmp
+run_binary
+.DS_Store
+scratch.tex
+*.prof
+run_binary.dSYM/
