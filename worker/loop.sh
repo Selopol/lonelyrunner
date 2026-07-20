@@ -77,8 +77,17 @@ compute_loop() {
   while true; do
     c=$((c + 1))
     echo "[compute] cycle $c $(date -u +%FT%TZ)"
-    python3 tools/hunt.py --max-speed "${HUNT_MAX_SPEED:-48}" \
-      --pass-name "auto-c${c}" || true
+    # Track B alternates: neighbours on odd cycles, parametric families on
+    # even ones, and the family reach grows as the cycles accumulate.
+    if [ $((c % 2)) -eq 1 ]; then
+      python3 tools/hunt.py --max-speed "${HUNT_MAX_SPEED:-48}" \
+        --pass-name "auto-c${c}" || true
+    else
+      reach=$(( 60 + c * 10 ))
+      [ "$reach" -gt 400 ] && reach=400
+      python3 tools/families.py --max-speed "$reach" \
+        --pass-name "fam-c${c}" || true
+    fi
     # One probe, one prime nobody has measured yet: the list used to restart
     # from its head every time and re-measure what we already knew.
     p=$(python3 tools/next_prime.py 2>/dev/null || echo "")
