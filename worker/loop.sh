@@ -13,6 +13,16 @@
 set -u
 cd "$(dirname "$0")/.."
 
+# Credentials for the brain. CLAUDE_CREDS_B64 carries a base64 of the
+# Claude Code credentials file (subscription OAuth, refreshes itself);
+# CLAUDE_CODE_OAUTH_TOKEN is the alternative from `claude setup-token`.
+if [ -n "${CLAUDE_CREDS_B64:-}" ]; then
+  mkdir -p "$HOME/.claude"
+  echo "$CLAUDE_CREDS_B64" | base64 -d > "$HOME/.claude/.credentials.json"
+  chmod 600 "$HOME/.claude/.credentials.json"
+  echo "brain credentials installed at $HOME/.claude/.credentials.json"
+fi
+
 # This container's disk is wiped on every redeploy; the journal is not.
 # Rebuild the lab notebook from it before any thinking starts.
 python3 tools/memory.py restore || true
@@ -20,9 +30,9 @@ python3 tools/memory.py restore || true
 brain_loop() {
   local n=0 start dur
   while true; do
-    if [ "${BRAIN_ENABLED:-1}" != "1" ] || [ -z "${CLAUDE_CODE_OAUTH_TOKEN:-}" ] \
-       || ! command -v claude >/dev/null 2>&1; then
-      echo "[brain] parked (no token or disabled)"
+    if [ "${BRAIN_ENABLED:-1}" != "1" ] || ! command -v claude >/dev/null 2>&1 \
+       || { [ -z "${CLAUDE_CODE_OAUTH_TOKEN:-}" ] && [ ! -s "$HOME/.claude/.credentials.json" ]; }; then
+      echo "[brain] parked (no credentials or disabled)"
       sleep 300
       continue
     fi
