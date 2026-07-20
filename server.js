@@ -69,6 +69,16 @@ function state() {
   for (const e of ev) {
     const p = e.payload || {};
     if (e.type === "RUN_STARTED") {
+      // A worker that dies without a terminal event leaves a run claiming to
+      // be alive. A later run of the same kind proves the older one is gone.
+      const kind = String(p.run_id || "").replace(/-\d{8}T\d{6}Z$/, "");
+      for (const r of Object.values(runs)) {
+        if (r.status === "running" &&
+            String(r.run_id || "").replace(/-\d{8}T\d{6}Z$/, "") === kind) {
+          r.status = "superseded";
+          r.reason = "a later run of the same kind started";
+        }
+      }
       runs[p.run_id] = { ...p, status: "running", started: e.ts };
     } else if (e.type === "RUN_DONE" || e.type === "RUN_ABORTED") {
       runs[p.run_id] = {

@@ -13,6 +13,7 @@ Usage:
 import os
 import platform
 import re
+import signal
 import subprocess
 import sys
 import time
@@ -93,6 +94,19 @@ def main():
     aborted = False
     proc = subprocess.Popen([binary], stdout=subprocess.PIPE,
                             stderr=subprocess.STDOUT, text=True)
+
+    # A redeploy sends SIGTERM. Record the death instead of leaving a run
+    # that claims to be alive forever.
+    def on_term(signum, _frame):
+        proc.kill()
+        append("RUN_ABORTED", {
+            "run_id": run_id, "k": k, "primes": primes,
+            "wall_s": round(time.time() - t0, 1),
+            "reason": "worker restarted (signal %d)" % signum})
+        sys.exit(143)
+
+    for sig in (signal.SIGTERM, signal.SIGINT):
+        signal.signal(sig, on_term)
     with open(raw_path, "w") as raw:
         try:
             for line in proc.stdout:
