@@ -244,7 +244,7 @@ fetch("/api/config").then((r) => r.json()).then((c) => {
 /* Real reasoning written by the model while working on this problem. Each
    line is a journal event; nothing here is generated in the browser. */
 let thoughts = [];
-let thoughtIdx = -1;
+let shown = null;
 let typeTimer = null;
 
 function agoText(ts) {
@@ -255,7 +255,13 @@ function agoText(ts) {
   return h < 24 ? `${h} h ago` : `${Math.round(h / 24)} d ago`;
 }
 
+function thoughtMeta(th) {
+  return `№${String(th.seq).padStart(4, "0")} · ${agoText(th.ts)}` +
+    (th.cycle ? ` · cycle ${th.cycle}` : "");
+}
+
 function typeThought(th) {
+  shown = th;
   const el = $("think-text");
   clearInterval(typeTimer);
   el.classList.remove("done");
@@ -275,20 +281,16 @@ function typeThought(th) {
       }
     }, 26);
   }
-  $("think-meta").textContent =
-    `№${String(th.seq).padStart(4, "0")} · ${agoText(th.ts)}` +
-    (th.cycle ? ` · cycle ${th.cycle}` : "");
+  $("think-meta").textContent = thoughtMeta(th);
 }
 
-function cycleThought() {
-  if (!thoughts.length) return;
-  thoughtIdx = (thoughtIdx + 1) % thoughts.length;
-  typeThought(thoughts[thoughtIdx]);
-}
-setInterval(cycleThought, 14000);
+// The age has to tick on its own; a reader should never need to reload to
+// learn that the newest thought is now a minute older.
+setInterval(() => {
+  if (shown) $("think-meta").textContent = thoughtMeta(shown);
+}, 10000);
 
 function setThoughts(list) {
-  const fresh = list.length !== thoughts.length;
   thoughts = list;
   if (!thoughts.length) {
     $("think-text").textContent = "no reasoning recorded yet";
@@ -302,10 +304,10 @@ function setThoughts(list) {
   const coldMin = (Date.now() - Date.parse(thoughts[thoughts.length - 1].ts)) / 60000;
   document.querySelector(".think-label").textContent =
     coldMin > STALE_MIN ? "THE BRAIN IS IDLE" : "FABLE IS THINKING";
-  if (fresh) {
-    thoughtIdx = thoughts.length - 1;
-    typeThought(thoughts[thoughtIdx]);
-  }
+  // Always the newest thought: rotating back to an old one made the line
+  // look like it had jumped backwards in time.
+  const newest = thoughts[thoughts.length - 1];
+  if (!shown || shown.seq !== newest.seq) typeThought(newest);
 }
 
 /* HAPPENING NOW: real runs with a live clock, honest quiet state */
