@@ -151,10 +151,12 @@ function renderShelf(certified) {
     cell.appendChild(curveSVG(c.speeds, 300));
     const cap = document.createElement("p");
     cap.className = "scap mono";
+    const conf = c.confirmations > 1
+      ? `<br>re-certified ${c.confirmations} times` : "";
     cap.innerHTML =
       `(${c.speeds.join(",")})<br>` +
       `δ = <span class="wax">${c.delta}</span> · ${c.status} · <a href="#ledger">№${String(c.seq).padStart(4, "0")}</a><br>` +
-      `${c.hash.slice(0, 12)}`;
+      `${c.hash.slice(0, 12)}${conf}`;
     cell.appendChild(cap);
     shelf.appendChild(cell);
   }

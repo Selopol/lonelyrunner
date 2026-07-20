@@ -23,6 +23,7 @@ from math import gcd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from delta_verifier import delta, classify
 from journal import append
+from memory import load_events
 
 K = 13
 BOUND = Fraction(1, K + 1)
@@ -89,6 +90,16 @@ def main():
     if "--pass-name" in sys.argv:
         pass_name = sys.argv[sys.argv.index("--pass-name") + 1]
 
+    # A configuration certified in an earlier pass is not a new find. Keep
+    # verifying it, but do not announce it again.
+    already = set()
+    try:
+        for e in load_events():
+            if e["type"] == "EXACTLY_CERTIFIED":
+                already.add(tuple(e["payload"].get("speeds", [])))
+    except Exception:
+        pass
+
     screened = kept = 0
     results = []
     for t in candidates(max_speed):
@@ -102,13 +113,18 @@ def main():
         info["novel_vs_known_list"] = novel
         results.append(info)
         if info["status"] in ("TIGHT", "COUNTEREXAMPLE"):
-            append("CANDIDATE_FOUND", {
-                "track": "B", "pass": pass_name, "speeds": info["speeds"],
-                "sampled_delta": s})
-            append("EXACTLY_CERTIFIED", {
-                "track": "B", "pass": pass_name, **info})
-            print(f"[{info['status']}] {info['speeds']} delta={info['delta']}"
-                  f" novel={novel}")
+            seen_before = tuple(info["speeds"]) in already
+            if seen_before:
+                print(f"[{info['status']}] {info['speeds']} (already certified)")
+            else:
+                already.add(tuple(info["speeds"]))
+                append("CANDIDATE_FOUND", {
+                    "track": "B", "pass": pass_name, "speeds": info["speeds"],
+                    "sampled_delta": s})
+                append("EXACTLY_CERTIFIED", {
+                    "track": "B", "pass": pass_name, **info})
+                print(f"[{info['status']}] {info['speeds']} delta={info['delta']}"
+                      f" novel={novel}")
 
     summary = {
         "track": "B", "pass": pass_name, "screened": screened,

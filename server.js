@@ -61,7 +61,7 @@ function events() {
 function state() {
   const ev = events();
   const runs = {};
-  const certified = [];
+  const certifiedBySpeeds = new Map();
   const hypotheses = [];
   const thoughts = [];
   let primesByK = {};
@@ -82,7 +82,19 @@ function state() {
     } else if (e.type === "SIEVE_LAYER_DONE" && p.k === 13) {
       layersK13.push({ p: p.p, size: p.size, elapsed_s: p.elapsed_s });
     } else if (e.type === "EXACTLY_CERTIFIED") {
-      certified.push({ ...p, seq: e.seq, hash: e.hash, ts: e.ts });
+      // One configuration is one specimen. Re-certifying it in a later hunt
+      // pass confirms it; it does not discover it again.
+      const key = (p.speeds || []).join(",");
+      const seen = certifiedBySpeeds.get(key);
+      if (seen) {
+        seen.confirmations += 1;
+        seen.last_ts = e.ts;
+      } else {
+        certifiedBySpeeds.set(key, {
+          ...p, seq: e.seq, hash: e.hash, ts: e.ts,
+          confirmations: 1, last_ts: e.ts,
+        });
+      }
     } else if (e.type === "HYPOTHESIS_PROPOSED") {
       hypotheses.push({ ...p, seq: e.seq, ts: e.ts });
     } else if (e.type === "THOUGHT") {
@@ -97,7 +109,7 @@ function state() {
     runs: Object.values(runs),
     primes_verified: primesByK,
     k13_layers: layersK13,
-    certified,
+    certified: [...certifiedBySpeeds.values()],
     hypotheses,
     thoughts: thoughts.slice(-40),
   };
