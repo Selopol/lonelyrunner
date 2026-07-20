@@ -6,10 +6,11 @@ arithmetic families of integer speed tuples. Pipeline (nothing is claimed
 from sampling alone):
 
   candidate (numeric prefilter) -> exactly certified (delta_verifier) ->
-  novelty check (vs known tight list)
+  matched against the known tight instances in the literature
 
 A certified delta < 1/14 would disprove the conjecture (lottery ticket).
-Certified delta == 1/14 with new structure = new tight instance (real find).
+Certified delta == 1/14 that no known family explains would be a find;
+our list of known families is the bar, and it is not the literature itself.
 
 Usage: hunt.py [--max-speed 40] [--pass-name mutations-v1]
 """
@@ -29,8 +30,26 @@ K = 13
 BOUND = Fraction(1, K + 1)
 PREFILTER_MARGIN = 0.004
 
-# Known tight instances for k=13 we consider non-novel.
-KNOWN_TIGHT = {tuple(range(1, 14))}
+# Tight instances already in the literature. Absence from this list is not
+# evidence of novelty, only that our list did not match; say so that way.
+#
+# Goddyn and Wong, "Tight instances of the lonely runner": accelerating one
+# runner of the canonical instance can stay tight. Their infinite family is
+# V = {1, ..., n-2, n, 2(n-1)} for n = 6t+1, which at n=13 is exactly
+# {1,...,11, 13, 24}. They also list {1,4,5,6,7,11,13} and
+# {1,...,17, 19, 36}.
+def _goddyn_wong(n):
+    return tuple(sorted(set(range(1, n - 1)) | {n, 2 * (n - 1)}))
+
+
+KNOWN_TIGHT = {
+    tuple(range(1, 14)),                    # the canonical instance
+    _goddyn_wong(13),                       # (1..11, 13, 24)
+    (1, 4, 5, 6, 7, 11, 13),
+    (1, 3, 4, 7), (1, 3, 4, 5, 9),
+    (1, 2, 3, 4, 5, 7, 12),
+    tuple(sorted(set(range(1, 18)) | {19, 36})),
+} | {_goddyn_wong(6 * t + 1) for t in range(1, 8)}
 
 
 def norm(t):
@@ -110,7 +129,7 @@ def main():
         kept += 1
         info = classify(t)
         novel = tuple(info["speeds"]) not in KNOWN_TIGHT
-        info["novel_vs_known_list"] = novel
+        info["unmatched_by_known_list"] = novel  # not a novelty claim
         results.append(info)
         if info["status"] in ("TIGHT", "COUNTEREXAMPLE"):
             seen_before = tuple(info["speeds"]) in already
@@ -124,14 +143,15 @@ def main():
                 append("EXACTLY_CERTIFIED", {
                     "track": "B", "pass": pass_name, **info})
                 print(f"[{info['status']}] {info['speeds']} delta={info['delta']}"
-                      f" novel={novel}")
+                      f" unmatched_by_known_list={novel}")
 
     summary = {
         "track": "B", "pass": pass_name, "screened": screened,
         "exact_certified": kept,
         "tight_found": sum(1 for r in results if r["status"] == "TIGHT"),
-        "tight_novel": sum(1 for r in results
-                           if r["status"] == "TIGHT" and r["novel_vs_known_list"]),
+        "tight_unmatched_by_known_list": sum(
+            1 for r in results
+            if r["status"] == "TIGHT" and r["unmatched_by_known_list"]),
         "counterexamples": sum(1 for r in results if r["status"] == "COUNTEREXAMPLE"),
         "max_speed": max_speed,
     }
