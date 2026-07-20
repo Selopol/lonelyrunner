@@ -63,6 +63,7 @@ function state() {
   const runs = {};
   const certified = [];
   const hypotheses = [];
+  const thoughts = [];
   let primesByK = {};
   let layersK13 = [];
   for (const e of ev) {
@@ -84,6 +85,8 @@ function state() {
       certified.push({ ...p, seq: e.seq, hash: e.hash, ts: e.ts });
     } else if (e.type === "HYPOTHESIS_PROPOSED") {
       hypotheses.push({ ...p, seq: e.seq, ts: e.ts });
+    } else if (e.type === "THOUGHT") {
+      thoughts.push({ ...p, seq: e.seq, ts: e.ts });
     }
   }
   const last = ev[ev.length - 1];
@@ -96,6 +99,7 @@ function state() {
     k13_layers: layersK13,
     certified,
     hypotheses,
+    thoughts: thoughts.slice(-40),
   };
 }
 
@@ -119,6 +123,7 @@ const EVENT_TYPES = new Set([
   "RUN_STARTED", "SIEVE_LAYER_DONE", "PRIME_VERIFIED", "RUN_DONE",
   "RUN_ABORTED", "CANDIDATE_FOUND", "EXACTLY_CERTIFIED",
   "HYPOTHESIS_PROPOSED", "REGRESSION_PASSED", "REGRESSION_FAILED",
+  "THOUGHT",
 ]);
 
 function canonical(obj) {

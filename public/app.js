@@ -178,6 +178,7 @@ function fmtPayload(e) {
     case "EXACTLY_CERTIFIED": return `(${(p.speeds || []).join(",")}) · δ = ${p.delta} · ${p.status}`;
     case "HYPOTHESIS_PROPOSED": return `${p.title || ""} [${p.tag || "idea"}]`;
     case "REGRESSION_PASSED": case "REGRESSION_FAILED": return p.test || "";
+    case "THOUGHT": return `“${(p.text || "").slice(0, 90)}${(p.text || "").length > 90 ? "…" : ""}”`;
     default: return "";
   }
 }
@@ -213,6 +214,68 @@ function streamPrint(evts) {
     stream.prepend(ln);
   }
   while (stream.children.length > 10) stream.removeChild(stream.lastChild);
+}
+
+/* ---------- the thinking line ---------- */
+/* Real reasoning written by the model while working on this problem. Each
+   line is a journal event; nothing here is generated in the browser. */
+let thoughts = [];
+let thoughtIdx = -1;
+let typeTimer = null;
+
+function agoText(ts) {
+  const m = Math.round((Date.now() - Date.parse(ts)) / 60000);
+  if (m < 1) return "just now";
+  if (m < 60) return `${m} min ago`;
+  const h = Math.round(m / 60);
+  return h < 24 ? `${h} h ago` : `${Math.round(h / 24)} d ago`;
+}
+
+function typeThought(th) {
+  const el = $("think-text");
+  clearInterval(typeTimer);
+  el.classList.remove("done");
+  const text = th.text || "";
+  if (REDUCED) {
+    el.textContent = text;
+    el.classList.add("done");
+  } else {
+    let i = 0;
+    el.textContent = "";
+    typeTimer = setInterval(() => {
+      i += 2;
+      el.textContent = text.slice(0, i);
+      if (i >= text.length) {
+        clearInterval(typeTimer);
+        el.classList.add("done");
+      }
+    }, 26);
+  }
+  $("think-meta").textContent =
+    `№${String(th.seq).padStart(4, "0")} · ${agoText(th.ts)}` +
+    (th.cycle ? ` · cycle ${th.cycle}` : "");
+}
+
+function cycleThought() {
+  if (!thoughts.length) return;
+  thoughtIdx = (thoughtIdx + 1) % thoughts.length;
+  typeThought(thoughts[thoughtIdx]);
+}
+setInterval(cycleThought, 14000);
+
+function setThoughts(list) {
+  const fresh = list.length !== thoughts.length;
+  thoughts = list;
+  if (!thoughts.length) {
+    $("think-text").textContent = "the brain is between cycles";
+    $("think-text").classList.add("done");
+    $("think-meta").textContent = "";
+    return;
+  }
+  if (fresh) {
+    thoughtIdx = thoughts.length - 1;
+    typeThought(thoughts[thoughtIdx]);
+  }
 }
 
 /* HAPPENING NOW: real runs with a live clock, honest quiet state */
@@ -260,6 +323,7 @@ function renderState(s) {
 
   nowState = s;
   renderNow();
+  setThoughts(s.thoughts || []);
 
   const huntRuns = s.runs.filter((r) => String(r.run_id || "").startsWith("hunt"));
   const screened = huntRuns.reduce((a, r) => a + (r.screened || 0), 0);
