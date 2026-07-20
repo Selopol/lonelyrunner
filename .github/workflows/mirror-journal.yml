@@ -36,7 +36,11 @@ jobs:
       - name: Rebuild notebook entries from the journal
         run: python3 tools/memory.py restore
 
-      - name: Skip when this run is the mirror's own commit
+      # Only a push may be the mirror reacting to itself. Applying this to
+      # scheduled runs deadlocked the mirror: once the head commit was its
+      # own, every later run skipped and the repo froze 89 events behind.
+      - name: Skip a push that this mirror itself made
+        if: github.event_name == 'push'
         run: |
           if git log -1 --pretty=%s | grep -q '^mirror: journal at'; then
             echo "SKIP=1" >> "$GITHUB_ENV"
