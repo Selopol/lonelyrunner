@@ -60,11 +60,17 @@ brain_loop() {
       fast=$((fast + 1))
       # Three quick deaths in a row look like broken credentials rather than
       # a rate limit: reseed from the environment once, then keep backing off.
-      if [ "$fast" -eq 3 ]; then
-        echo "[brain] three short cycles, reseeding credentials"
-        install_creds || true
+      # Do NOT reseed from the environment here. The volume copy may have been
+      # refreshed since boot, and overwriting it with the stale environment one
+      # is a way to turn a recoverable failure into a permanent one. Repeated
+      # short cycles mean the credentials need a human, so back off hard and
+      # stop filling the log.
+      if [ "$fast" -ge 3 ]; then
+        echo "[brain] repeated auth failures: the credentials need renewing (claude setup-token)"
+        sleep 1800
+      else
+        sleep 300
       fi
-      sleep 300
     else
       fast=0
       sleep 15
