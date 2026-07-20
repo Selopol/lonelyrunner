@@ -39,18 +39,30 @@ def machine_info():
 def main():
     k = int(sys.argv[1])
     timeout = None
+    primes = None
     if "--timeout" in sys.argv:
         timeout = int(sys.argv[sys.argv.index("--timeout") + 1])
+    if "--primes" in sys.argv:
+        primes = [int(x) for x in sys.argv[sys.argv.index("--primes") + 1].split(",")]
 
     src = open(os.path.join(UPSTREAM, "main.cpp")).read()
     patched, n = re.subn(r"constexpr int K = \d+;", f"constexpr int K = {k};", src)
     assert n == 1, "could not patch K in main.cpp"
+
+    # Restrict this run to chosen primes. Without this every bounded probe
+    # restarts at the head of the list and re-measures what we already know.
+    if primes:
+        pat = re.compile(
+            r"(template <> struct LrcVerifier<%d>\s*\{\s*using Primes\s*=\s*)PrimeList<[^>]*>" % k)
+        patched, n = pat.subn(r"\1PrimeList<%s>" % ", ".join(str(p) for p in primes), patched)
+        assert n == 1, f"could not patch the prime list for K={k}"
     build_dir = os.path.join(ROOT, "solver", "build")
     os.makedirs(build_dir, exist_ok=True)
-    main_path = os.path.join(build_dir, f"main_k{k}.cpp")
+    tag = f"k{k}" + (f"_p{'_'.join(str(p) for p in primes)}" if primes else "")
+    main_path = os.path.join(build_dir, f"main_{tag}.cpp")
     open(main_path, "w").write(patched)
 
-    binary = os.path.join(build_dir, f"lrc_k{k}")
+    binary = os.path.join(build_dir, f"lrc_{tag}")
     # Some images need LLVM's own libc++ for <format>; see Dockerfile.worker.
     extra = os.environ.get("SOLVER_CXXFLAGS", "").split()
     t0 = time.time()
@@ -63,13 +75,13 @@ def main():
         print(cc.stderr[-2000:])
         sys.exit(1)
 
-    run_id = f"k{k}-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}"
+    run_id = f"{tag}-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}"
     raw_dir = os.path.join(ROOT, "journal", "raw")
     os.makedirs(raw_dir, exist_ok=True)
     raw_path = os.path.join(raw_dir, f"{run_id}.log")
 
     append("RUN_STARTED", {
-        "run_id": run_id, "k": k, "track": "A",
+        "run_id": run_id, "k": k, "track": "A", "primes": primes,
         "command": f"lrc_k{k} (upstream main.cpp, K={k})",
         "compiler": "clang++ -std=c++23 -march=native -O3",
         "compile_s": compile_s, "machine": machine_info(),

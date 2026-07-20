@@ -47,7 +47,16 @@ compute_loop() {
     echo "[compute] cycle $c $(date -u +%FT%TZ)"
     python3 tools/hunt.py --max-speed "${HUNT_MAX_SPEED:-48}" \
       --pass-name "auto-c${c}" || true
-    python3 tools/run_solver.py 13 --timeout "${K13_PROBE_SECONDS:-3600}" || true
+    # One probe, one prime nobody has measured yet: the list used to restart
+    # from its head every time and re-measure what we already knew.
+    p=$(python3 tools/next_prime.py 2>/dev/null || echo "")
+    if [ -n "$p" ]; then
+      echo "[compute] probing p=$p"
+      python3 tools/run_solver.py 13 --primes "$p" \
+        --timeout "${K13_PROBE_SECONDS:-3600}" || true
+    else
+      python3 tools/run_solver.py 13 --timeout "${K13_PROBE_SECONDS:-3600}" || true
+    fi
     sleep 20
   done
 }
