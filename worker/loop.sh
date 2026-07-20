@@ -102,7 +102,10 @@ compute_loop() {
       python3 tools/run_solver.py 13 --primes "$p" \
         --timeout "${K13_PROBE_SECONDS:-3600}" || true
     else
-      python3 tools/run_solver.py 13 --timeout "${K13_PROBE_SECONDS:-3600}" || true
+      # Every candidate is either measured or has already timed out. Do not
+      # rerun the full list from its head; let the family search carry the
+      # cycle instead.
+      echo "[compute] no fresh prime to probe, skipping"
     fi
     sleep 20
   done

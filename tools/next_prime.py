@@ -28,15 +28,25 @@ def main():
     facts = load_facts()
     if facts is not None:
         measured = set(facts.get("measured_primes_k13", []))
+        # A prime the solver could not finish inside its budget must not be
+        # picked again, or the loop wedges on it forever, re-timing-out.
+        too_expensive = set(facts.get("too_expensive_k13", []))
     else:
-        measured = set()
+        measured, too_expensive = set(), set()
         for e in load_events():
             p = e.get("payload", {})
             if e["type"] in ("SIEVE_LAYER_DONE", "PRIME_VERIFIED") and p.get("k") == K:
                 measured.add(p.get("p"))
-    fresh = [p for p in CANDIDATES if p not in measured]
+            if (e["type"] == "RUN_ABORTED" and p.get("k") == K
+                    and "timeout" in str(p.get("reason", "")).lower()):
+                for q in p.get("primes") or []:
+                    too_expensive.add(q)
+    skip = measured | too_expensive
+    fresh = [p for p in CANDIDATES if p not in skip]
     if not fresh:
-        print(CANDIDATES[0])
+        # Everything is either measured or too expensive; nothing left to probe.
+        # Emit nothing so the caller runs an unrestricted pass instead of
+        # hammering one prime.
         return
     # Test the residue-class hypothesis first: primes at -1 mod (k+1) look
     # dramatically cheaper in the data so far. Smallest first inside a class.

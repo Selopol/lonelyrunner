@@ -83,6 +83,7 @@ function state() {
   const thoughts = [];
   let primesByK = {};
   let layersK13 = [];
+  const timedOutK13 = new Set();
   for (const e of ev) {
     const p = e.payload || {};
     if (e.type === "RUN_STARTED") {
@@ -106,6 +107,12 @@ function state() {
         status: e.type === "RUN_DONE" ? "done" : "bounded",
         finished: e.ts,
       };
+      // A prime the solver could not finish inside its budget is too
+      // expensive to keep re-selecting; record it so the picker skips it.
+      if (e.type === "RUN_ABORTED" && /timeout/i.test(String(p.reason || "")) &&
+          Array.isArray(p.primes) && p.k === 13) {
+        for (const q of p.primes) timedOutK13.add(q);
+      }
     } else if (e.type === "PRIME_VERIFIED") {
       primesByK[p.k] = (primesByK[p.k] || 0) + 1;
     } else if (e.type === "SIEVE_LAYER_DONE" && p.k === 13) {
@@ -138,6 +145,7 @@ function state() {
     runs: Object.values(runs),
     primes_verified: primesByK,
     k13_layers: layersK13,
+    timed_out_k13: [...timedOutK13],
     certified: [...certifiedBySpeeds.values()],
     hypotheses,
     thoughts: thoughts.slice(-40),
@@ -257,6 +265,7 @@ http
       return send(res, 200, JSON.stringify({
         certified_speeds: st.certified.map((c) => c.speeds),
         measured_primes_k13: [...new Set(st.k13_layers.map((l) => l.p))],
+        too_expensive_k13: st.timed_out_k13 || [],
       }));
     }
 
