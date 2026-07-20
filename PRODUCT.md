@@ -7,8 +7,7 @@ register: brand
 A live mathematics experiment with a public, hash-chained journal. An AI
 (Claude Fable 5) and a 10-core Apple M4 attack the open frontier of the
 Lonely Runner Conjecture: 14 runners, unsolved since 1967. The site is the
-window into that experiment. A memecoin ($LONELY, ticker TBD) launches on
-top of the experiment; the experiment is real either way.
+window into that experiment.
 
 ## Users
 

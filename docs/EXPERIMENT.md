@@ -65,12 +65,11 @@ hash). Raw logs downloadable — "don't trust, verify".
 
 ## Infrastructure (launch scope)
 
-- Site + event API: Railway (like all coinbot sites), JSON polling (no WS).
+- Site + event API: Railway, JSON polling (no WS).
 - Heavy C++: local Apple M4 (10 cores) posting events to the API.
 - AI work: Fable agents on the Claude Max subscription.
 - Deploy: git push to main (never `railway up`).
-- Deferred (roadmap, not built now): fees→compute fleet, k=14, crowdsourcing,
-  token incentives on site, 3D.
+- Deferred (not built now): k=14, crowdsourcing, 3D.
 
 ## Launch checklist (2-3 days)
 
@@ -83,5 +82,4 @@ hash). Raw logs downloadable — "don't trust, verify".
        tuples with witness times, proof console (real logs), frontier timeline
        1967→2026, track B/C/A feeds. Viewports 1920/834/390.
 7. [ ] Fable lab notebook v1: first real pruning hypothesis cycle.
-8. [ ] Coin/ticker: separate step AFTER the site is live (working name
-       $LONELY, availability unchecked).
+8. [x] Site live at lonelyrunner.fun; worker running the tracks on Railway.

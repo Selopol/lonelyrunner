@@ -18,9 +18,15 @@ marketing. Say when something failed or when you are unsure. These lines are
 shown live on the site, so they must be true reasoning about the work in front
 of you, never filler. Aim for 5 to 12 thoughts across the cycle.
 
+**You run back to back, forever.** Cycles must compound, never repeat. Before
+anything else, look at what past cycles already established and continue from
+there. If you find yourself about to redo a measurement that is already in the
+journal, pick the next unanswered question instead.
+
 Do this cycle:
-1. Read docs/EXPERIMENT.md and the latest file in notebook/ to see where the
-   previous cycle stopped.
+1. Read docs/EXPERIMENT.md, the latest file in notebook/, and the last few
+   HYPOTHESIS_PROPOSED plus recent THOUGHT events in the journal, so you know
+   what has been tried, what failed, and what the open question is now.
 2. Read journal/events.jsonl highlights via: python3 -c "..." or the API
    (JOURNAL_API env). Note any new SIEVE_LAYER_DONE sizes for k=13.
 3. Advance the current hypothesis by ONE concrete step from the previous
