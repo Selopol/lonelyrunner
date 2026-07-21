@@ -144,6 +144,7 @@ function state() {
   const out = {
     total_events: ev.length,
     chain_head: last ? last.hash : null,
+    first_event_ts: ev.length ? ev[0].ts : null,
     last_event_ts: last ? last.ts : null,
     runs: Object.values(runs),
     primes_verified: primesByK,

@@ -351,6 +351,159 @@ function renderNow() {
 }
 setInterval(renderNow, 1000);
 
+/* ---------- §1 the record so far ---------- */
+const fmtN = (n) => n.toLocaleString("en");
+const RUN_STALE_MS = 3 * 60 * 60 * 1000;
+const SUP = "⁰¹²³⁴⁵⁶⁷⁸⁹";
+
+/* the k=13 doors: measured layers, over-budget primes, the live probe */
+function k13Doors(s) {
+  const byP = new Map();
+  for (const l of s.k13_layers) byP.set(l.p, l);
+  const over = (s.timed_out_k13 || []).filter((p) => !byP.has(p)).sort((a, b) => a - b);
+  const live = s.runs.find((r) =>
+    r.status === "running" && r.started &&
+    Date.now() - Date.parse(r.started) < RUN_STALE_MS &&
+    /^k13_p\d+/.test(String(r.run_id || "")));
+  const m = live && String(live.run_id).match(/^k13_p(\d+)/);
+  return { byP, over, probing: m ? Number(m[1]) : null };
+}
+
+/* the score list and the stage tally: cumulative work, all from the journal */
+function renderScore(s) {
+  const el = $("score");
+  if (!el) return;
+  const day = s.first_event_ts
+    ? Math.floor((Date.now() - Date.parse(s.first_event_ts)) / 86400e3) + 1 : 1;
+  const examined = s.runs.reduce((a, r) => a + (r.screened || 0) + (r.families_tested || 0), 0);
+  const certs = s.certified.reduce((a, c) => a + (c.confirmations || 1), 0);
+  const tights = s.certified.filter((c) => c.status === "TIGHT").length;
+  const killed = s.hypotheses.filter((h) => h.tag === "disproved").length;
+  const { byP, over, probing } = k13Doors(s);
+  let ms = 0;
+  for (const r of s.runs) {
+    if (r.started && r.finished) ms += Math.max(0, Date.parse(r.finished) - Date.parse(r.started));
+  }
+  const rows = [
+    [`day ${day}`, "of continuous computation", "since July 20, 2026"],
+    [fmtN(s.total_events), "chained journal events", "the appendix, §4"],
+    [fmtN(examined), "speed configurations examined", "counterexamples found: 0"],
+    [fmtN(certs), "exact certificates issued", `${s.certified.length} distinct · ${tights} tight · §2`],
+    [fmtN(byP.size), "prime doors measured into case 14", `${over.length} over budget` +
+      (probing ? ` · probing p = ${probing}` : "")],
+    [fmtN(s.hypotheses.length), "hypotheses filed by the model", `${killed} killed by counter-tests`],
+    [`≈ ${Math.round(ms / 3600e3)} h`, "of machine time logged", "one rented machine"],
+  ];
+  el.innerHTML = rows.map(([v, w, n]) =>
+    `<li><span class="s-val mono">${v}</span><span class="s-what">${w}</span><span class="s-note mono">${n}</span></li>`
+  ).join("");
+  $("tally").innerHTML =
+    `so far: <b>day ${day}</b> · <b>${fmtN(s.total_events)}</b> events · ` +
+    `<b>${fmtN(examined)}</b> configurations examined · ` +
+    `<b>${byP.size}</b> doors measured · <a href="#record">the record ↓</a>`;
+}
+
+/* Fig. 2: the wall, one slot per prime door tried */
+let wallSig = "";
+function renderWall(s) {
+  const plate = $("wall-plate");
+  if (!plate) return;
+  const { byP, over, probing } = k13Doors(s);
+  const measured = [...byP.values()].sort((a, b) => a.p - b.p);
+  const cs = getComputedStyle(plate);
+  const W = Math.max(280, Math.round(
+    plate.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight)));
+  const sig = JSON.stringify([measured.map((l) => [l.p, l.size]), over, probing, W]);
+  if (sig === wallSig) return;
+  wallSig = sig;
+
+  const slots = [...new Set([
+    ...measured.map((l) => l.p), ...over, ...(probing ? [probing] : []),
+  ])].sort((a, b) => a - b);
+  if (!slots.length || !measured.length) {
+    plate.innerHTML = `<p class="mono" style="color:var(--ink-faint)">no doors measured yet</p>`;
+    return;
+  }
+
+  const H = 274, padL = 42, padR = 8, top = 16;
+  const y0 = H - 52, gy = y0 + 16, ly = y0 + 38;
+  const plotW = W - padL - padR;
+  const slotW = plotW / slots.length;
+  const barW = Math.min(14, Math.max(3, slotW * 0.6));
+  const xAt = (i) => padL + i * slotW + slotW / 2;
+
+  const sizes = measured.map((l) => l.size);
+  const loMag = Math.floor(Math.log10(Math.min(...sizes)));
+  const hiMag = Math.ceil(Math.log10(Math.max(...sizes)));
+  const yAt = (v) => y0 - ((Math.log10(v) - loMag) / (hiMag - loMag)) * (y0 - top);
+  const sup = (m) => "10" + String(m).split("").map((d) => SUP[+d]).join("");
+
+  let g = "";
+  for (let m = loMag; m <= hiMag; m++) {
+    const y = yAt(10 ** m).toFixed(1);
+    g += `<line class="wgrid" x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}"/>` +
+      `<text x="${padL - 6}" y="${+y + 3}" text-anchor="end" font-size="10">${sup(m)}</text>`;
+  }
+  g += `<line class="waxis" x1="${padL}" y1="${y0}" x2="${W - padR}" y2="${y0}"/>`;
+
+  const idx = new Map(slots.map((p, i) => [p, i]));
+  const maxL = measured.reduce((a, l) => (l.size > a.size ? l : a));
+  const minL = measured.reduce((a, l) => (l.size < a.size ? l : a));
+  for (const l of measured) {
+    const x = xAt(idx.get(l.p)), y = yAt(l.size), w = barW / 2, r = Math.min(2, w);
+    g += `<g><title>p = ${l.p} · I(13,${l.p},1) = ${fmtN(l.size)}` +
+      (l.elapsed_s ? ` · ${fmtN(Math.round(l.elapsed_s))} s` : "") + `</title>` +
+      `<path class="wbar" d="M${(x - w).toFixed(1)} ${y0} V${(y + r).toFixed(1)} ` +
+      `Q${(x - w).toFixed(1)} ${y.toFixed(1)} ${(x - w + r).toFixed(1)} ${y.toFixed(1)} ` +
+      `H${(x + w - r).toFixed(1)} Q${(x + w).toFixed(1)} ${y.toFixed(1)} ` +
+      `${(x + w).toFixed(1)} ${(y + r).toFixed(1)} V${y0} Z"/></g>`;
+    if (l === maxL || l === minL) {
+      const anchor = x < W * 0.16 ? "start" : x > W * 0.84 ? "end" : "middle";
+      const tx = anchor === "start" ? x + w + 3 : anchor === "end" ? x - w - 3 : x;
+      g += `<text class="wlabel" x="${tx.toFixed(1)}" y="${(y - 5).toFixed(1)}" ` +
+        `text-anchor="${anchor}" font-size="10">${fmtN(l.size)}</text>`;
+    }
+  }
+  for (const p of over) {
+    const x = xAt(idx.get(p));
+    g += `<g><title>p = ${p} · over the 30 minute budget</title>` +
+      `<line class="wcross" x1="${(x - 3).toFixed(1)}" y1="${gy - 3}" x2="${(x + 3).toFixed(1)}" y2="${gy + 3}"/>` +
+      `<line class="wcross" x1="${(x - 3).toFixed(1)}" y1="${gy + 3}" x2="${(x + 3).toFixed(1)}" y2="${gy - 3}"/></g>`;
+  }
+  for (const l of measured) {
+    const x = xAt(idx.get(l.p));
+    g += `<rect class="wbar" x="${(x - 2.5).toFixed(1)}" y="${gy - 2.5}" width="5" height="5"/>`;
+  }
+  if (probing != null && idx.has(probing)) {
+    const x = xAt(idx.get(probing));
+    g += `<g><title>p = ${probing} · probing now</title>` +
+      `<circle class="wprobe" cx="${x.toFixed(1)}" cy="${gy}" r="3.5"/></g>`;
+  }
+
+  /* a few prime labels, greedily spaced */
+  const want = [...new Set([probing, maxL.p, minL.p, slots[0], slots[slots.length - 1]]
+    .filter((p) => p != null))];
+  const placed = [];
+  for (const p of want) {
+    const x = Math.min(W - padR - 14, Math.max(padL + 14, xAt(idx.get(p))));
+    if (placed.some((px) => Math.abs(px - x) < 34)) continue;
+    placed.push(x);
+    g += `<text x="${x.toFixed(1)}" y="${ly}" text-anchor="middle" font-size="10"` +
+      (p === probing ? ` fill="var(--wax)"` : "") + `>${p}</text>`;
+  }
+
+  plate.innerHTML =
+    `<svg class="wallchart" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" ` +
+    `role="img" aria-label="Measured first sieve layer sizes at each prime door, log scale">${g}</svg>`;
+  $("wall-cap").innerHTML =
+    `Fig. 2. The wall, measured. Bar height is the size of the first sieve layer ` +
+    `I(13, p, 1) behind each prime door p, log scale: short bars are cheap doors. ` +
+    `■ measured · <span class="dim">✕ over the 30 minute budget</span>` +
+    (probing != null ? ` · <span class="wax">●</span> probing p = ${probing} now` : "") +
+    `. Every bar is a SIEVE_LAYER_DONE event in the ledger, §4.`;
+}
+addEventListener("resize", () => { wallSig = ""; if (nowState) renderWall(nowState); });
+
 /* ---------- state render ---------- */
 function renderState(s) {
   const ago = s.last_event_ts
@@ -372,6 +525,8 @@ function renderState(s) {
   nowState = s;
   renderNow();
   setThoughts(s.thoughts || []);
+  renderScore(s);
+  renderWall(s);
 
   const huntRuns = s.runs.filter((r) => String(r.run_id || "").startsWith("hunt"));
   const screened = huntRuns.reduce((a, r) => a + (r.screened || 0), 0);

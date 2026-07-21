@@ -23,6 +23,7 @@
   <span class="mast-title">THE LONELY RUNNER EXPERIMENT</span>
   <nav class="mast-nav mono">
     <a href="#abstract">Abstract</a>
+    <a href="#record">Record</a>
     <a href="#specimens">Specimens</a>
     <a href="#tracks">Experiment</a>
     <a href="#ledger">Ledger</a>
@@ -36,6 +37,7 @@
   <div class="stage-now">
     <p class="mono live-label"><span class="live-dot"></span>HAPPENING NOW</p>
     <div class="mono" id="now-runs">connecting to the journal…</div>
+    <div class="mono stage-tally" id="tally"></div>
   </div>
   <div class="stage-stream mono" id="stream" aria-live="polite"></div>
   <div class="stage-scope">
@@ -106,6 +108,29 @@
     <li><span class="yr mono">2026</span><span class="what">11, 12, 13 runners</span><span class="who mono">Sungkawichai, Trakulthongchai</span></li>
     <li class="open"><span class="yr mono">now</span><span class="what">14 runners · open</span><span class="who mono">this experiment</span></li>
   </ol>
+
+  <!-- ————— the record so far ————— -->
+  <section id="record">
+    <h2><span class="secno mono">§1</span> The record so far</h2>
+    <p class="body-note">An open conjecture offers no progress bar, and we
+    will not draw a fake one. What a real attack accumulates is work:
+    configurations examined, doors measured, hypotheses killed. The tallies
+    below are computed from the hash-chained journal as you read them; every
+    line resolves to events you can recount yourself.</p>
+    <ul class="ledger score" id="score" aria-label="Cumulative record, live from the journal"></ul>
+
+    <figure class="fig" id="figwall">
+      <div class="figplate" id="wall-plate"></div>
+      <figcaption class="mono" id="wall-cap"></figcaption>
+    </figure>
+
+    <p class="body-note">The record holders put the fourteenth case at three
+    to four machine-years with their method as published, and name the first
+    sieve as the bottleneck. So the experiment measures that wall door by
+    door: at some primes the sieve collapses to a size a rented machine can
+    hold. Finding out why, and whether the collapse survives the full check,
+    is the whole game.</p>
+  </section>
 
   <!-- ————— specimens ————— -->
   <section id="specimens">
